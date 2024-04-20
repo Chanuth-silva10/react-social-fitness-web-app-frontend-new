@@ -1,10 +1,17 @@
-import './App.css';
-import Authentication from './pages/Authentication/Authentication';
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import Authentication from "./pages/Authentication/Authentication";
+import Message from "./pages/Message/Message";
+import HomePage from "./pages/HomePage/HomePage";
 
 function App() {
   return (
     <div className="App">
-      <Authentication/>
+      <Routes>
+        <Route path="/home" element={<HomePage />}></Route>
+        <Route path="/message" element={<Message />}></Route>
+        <Route path="/*" element={<Authentication />}></Route>
+      </Routes>
     </div>
   );
 }
