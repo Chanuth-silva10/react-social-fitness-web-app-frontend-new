@@ -1,8 +1,10 @@
 import { Button, TextField } from "@mui/material";
 import { ErrorMessage, Field, Form, Formik, validateYupSchema } from "formik";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { loginUserAction } from "../../Redux/Auth/auth.action";
 
 const initialValues = { email: "", password: "" };
 const validationSchema = {
@@ -13,10 +15,12 @@ const validationSchema = {
 };
 const Login = () => {
   const [formValue, setFormValue] = useState();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = (values) => {
     console.log("handle submit", values);
+    dispatch(loginUserAction({ data: values }));
   };
   return (
     <>
@@ -69,9 +73,9 @@ const Login = () => {
           </Button>
         </Form>
       </Formik>
-      <div className="flex gap-5 items-center justify-center pt-5">
+      <div className="flex items-center justify-center gap-5 pt-5">
         if you don't have account ?
-        <Button onClick={()=>navigate("/register")}>Register</Button>
+        <Button onClick={() => navigate("/register")}>Register</Button>
       </div>
     </>
   );

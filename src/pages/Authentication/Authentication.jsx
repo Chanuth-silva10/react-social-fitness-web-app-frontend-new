@@ -9,17 +9,17 @@ const Authentication = () => {
     <div>
       <Grid container>
         <Grid
-          className="h-screen overflow-hidden flex items-center"
+          className="flex items-center h-screen overflow-hidden"
           item
           xs={7}
         >
-          <img className="h-full w-full" src="" alt="Background" />
+          <img className="w-full h-full" src="" alt="Background" />
         </Grid>
         <Grid item xs={5} className="flex items-center">
-          <div className="px-20 flex flex-col justify-self-center">
-            <Card className="card p-8">
+          <div className="flex flex-col px-20 justify-self-center">
+            <Card className="p-8 card">
               <div className="flex flex-col items-center mb-5 space-y-1">
-                <h1 className="log text-center">Social Fitness</h1>
+                <h1 className="text-center log">Social Fitness</h1>
                 <p className="text-center text-sm w-[70%]">
                   Welcome and Share your health and fitness information across
                   platform
