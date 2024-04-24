@@ -1,6 +1,7 @@
 import { Button, FormControlLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import { ErrorMessage, Field, Form, Formik, validateYupSchema } from "formik";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 const initialValues = {firstName:"",lastName:"", email: "", password: "" };
@@ -12,6 +13,7 @@ const validationSchema = {
 };
 const Register = () => {
   const [gender, setGender] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (values) => {
     values.gender=gender;
@@ -128,6 +130,10 @@ const Register = () => {
           </Button>
         </Form>
       </Formik>
+      <div className="flex gap-5 items-center justify-center pt-5">
+        if you have already account ?
+        <Button onClick={()=>navigate("/login")}>Login</Button>
+      </div>
     </>
   );
 };
