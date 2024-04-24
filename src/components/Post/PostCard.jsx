@@ -48,7 +48,7 @@ const PostCard = () => {
           mussels, if you like.
         </Typography>
       </CardContent>
-      <CardActions disableSpacing>
+      <CardActions className="flex justify-between" disableSpacing>
         <div>
           <IconButton>
             {true ? <FavoriteIcon /> : <FavoriteBorderIcon />}
@@ -61,7 +61,7 @@ const PostCard = () => {
           </IconButton>
         </div>
         <div>
-           {true?<BookmarkAdd/>:<BookmarkBorderIcon/>}
+           {true?<BookmarkIcon/>:<BookmarkBorderIcon/>}
         </div>
       </CardActions>
     </Card>

@@ -8,6 +8,7 @@ import ArticleIcon from "@mui/icons-material/Article";
 import PostCard from "../Post/PostCard";
 
 const story = [11, 1, 1, 1, 1];
+const posts = [1, 1, 1, 1, 1];
 const Middelpart = () => {
   const handleOpenCreatePostModel = () => {
     console.log("Open the post model");
@@ -56,7 +57,7 @@ const Middelpart = () => {
         </div>
       </Card>
       <div className="mt-5 space-y-5">
-        <PostCard />
+        {posts.map((item)=><PostCard />)}
       </div>
     </div>
   );
