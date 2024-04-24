@@ -15,8 +15,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShareIcon from "@mui/icons-material/Share";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
-import BookmarkBorderIcon, { BookmarkAdd } from "@mui/icons-material"
-import BookmarkIcon from "@mui/icons-material/Bookmark"
+import BookmarkBorderIcon, { BookmarkAdd } from "@mui/icons-material";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
 
 const PostCard = () => {
   return (
@@ -61,7 +61,9 @@ const PostCard = () => {
           </IconButton>
         </div>
         <div>
-           {true?<BookmarkIcon/>:<BookmarkBorderIcon/>}
+          <IconButton>
+            {true ? <BookmarkIcon /> : <BookmarkBorderIcon />}
+          </IconButton>
         </div>
       </CardActions>
     </Card>
