@@ -12,6 +12,9 @@ import { useFormik } from "formik";
 import React, { useState } from "react";
 import ImageIcon from "@mui/icons-material/Image";
 import VideoIcon from "@mui/icons-material/VideoCall";
+import { uploadToCloudinary } from "../../utils/uploadToCloudniry";
+import { useDispatch } from "react-redux";
+import { createCommentAction, createPostAction } from "../../Redux/Post/post.action";
 
 const style = {
   position: "absolute",
@@ -31,10 +34,23 @@ const CreatePostModal = ({ handleClose, open }) => {
   const [selectedImage, setSelectedImage] = useState();
   const [selectedVideo, setSelectedVideo] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch=useDispatch();
 
-  const handleSelectImage = () => {};
+  const handleSelectImage = async (event) => {
+    setIsLoading(true);
+    const imageUrl = await uploadToCloudinary(event.target.files[0], "image");
+    setSelectedImage(imageUrl);
+    setIsLoading(false);
+    formik.setFieldValue("image", imageUrl);
+  };
 
-  const handleSelectVideo = () => {};
+  const handleSelectVideo = async (event) => {
+    setIsLoading(true);
+    const videoUrl = await uploadToCloudinary(event.target.files[0], "image");
+    setSelectedVideo(videoUrl);
+    setIsLoading(false);
+    formik.setFieldValue("image", videoUrl);
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -42,7 +58,9 @@ const CreatePostModal = ({ handleClose, open }) => {
       image: "",
       video: "",
     },
-    onSubmit: (values) => {},
+    onSubmit: (values) => {
+        dispatch(createPostAction(values));
+    },
   });
 
   return (
@@ -55,10 +73,10 @@ const CreatePostModal = ({ handleClose, open }) => {
       <Box sx={style}>
         <form onSubmit={formik.handleSubmit}>
           <div>
-            <div className="flex space-x-4 items-center">
+            <div className="flex items-center space-x-4">
               <Avatar />
               <div>
-                <p className="font-bold text-lg">Chanuth with Social</p>
+                <p className="text-lg font-bold">Chanuth with Social</p>
                 <p className="text-sm">@Chanuth</p>
               </div>
             </div>
@@ -72,7 +90,7 @@ const CreatePostModal = ({ handleClose, open }) => {
               value={formik.values.caption}
               rows="4"
             ></textarea>
-            <div className="flex space-x-5 items-center mt-5">
+            <div className="flex items-center mt-5 space-x-5">
               <div>
                 <input
                   type="file"
@@ -82,7 +100,7 @@ const CreatePostModal = ({ handleClose, open }) => {
                   id="image-input"
                 />
                 <label htmlFor="image-input">
-                  <IconButton color="primary">
+                  <IconButton color="primary" component="span">
                     <ImageIcon />
                   </IconButton>
                 </label>
@@ -109,7 +127,7 @@ const CreatePostModal = ({ handleClose, open }) => {
                 <img className="h-[10rem]" src={selectedImage} alt="" />
               </div>
             )}
-            <div className="flex w-full justify-end">
+            <div className="flex justify-end w-full">
               <Button
                 variant="contained"
                 type="submit"
