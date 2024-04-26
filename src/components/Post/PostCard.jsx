@@ -19,13 +19,14 @@ import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import BookmarkBorderIcon, { BookmarkAdd } from "@mui/icons-material";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { useDispatch, useSelector } from "react-redux";
-import { createCommentAction } from "../../Redux/Post/post.action";
+import { createCommentAction, likePostAction } from "../../Redux/Post/post.action";
 import { comment } from "postcss";
+import { isLikedByReqUser } from "../../utils/isLikedByReqUser";
 
 const PostCard = ({ item }) => {
   const [showComments, setShowComments] = useState(false);
   const dispatch = useDispatch();
-  const { post } = useSelector((store) => store);
+  const { post, auth } = useSelector((store) => store);
 
   const handleShowComment = () => setShowComments(!showComments);
 
@@ -38,6 +39,10 @@ const PostCard = ({ item }) => {
     };
     dispatch(createCommentAction(reqData));
   };
+
+  const handleLikePost=()=>{
+    dispatch(likePostAction(item.id));
+  }
 
   return (
     <Card className="">
@@ -73,8 +78,8 @@ const PostCard = ({ item }) => {
       </CardContent>
       <CardActions className="flex justify-between" disableSpacing>
         <div>
-          <IconButton>
-            {true ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+          <IconButton onClick={handleLikePost}>
+            {isLikedByReqUser(auth.user.id, item) ? <FavoriteIcon /> : <FavoriteBorderIcon />}
           </IconButton>
           <IconButton>{<ShareIcon />}</IconButton>
           <IconButton onClick={handleShowComment}>
