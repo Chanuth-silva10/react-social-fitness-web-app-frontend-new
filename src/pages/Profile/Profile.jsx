@@ -32,7 +32,10 @@ const Profile = () => {
     setValue(newValue);
   };
 
-  const userPosts = post.posts.filter((item) => item.user.id === auth.user.id);
+  const userPosts = post.posts.filter(
+    (item) => item.user.id === auth.user.id
+  );
+
   const userMealPosts = meal.posts.filter(
     (item) => item.user.id === auth.user.id
   );

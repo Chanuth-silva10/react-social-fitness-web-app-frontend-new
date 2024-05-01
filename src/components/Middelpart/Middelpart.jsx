@@ -4,11 +4,13 @@ import AddIcon from "@mui/icons-material/Add";
 import StoryCircle from "./StoryCircle";
 import ImageIcon from "@mui/icons-material/Image";
 import VideocamIcon from "@mui/icons-material/Videocam";
-import ArticleIcon from "@mui/icons-material/Article";
 import PostCard from "../Post/PostCard";
 import CreatePostModal from "../CreatePost/CreatePostModal";
 import { useDispatch, useSelector } from "react-redux";
 import { getALlPostAction } from "../../Redux/Post/post.action";
+import LunchDiningIcon from "@mui/icons-material/LunchDining";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import FlagCircleIcon from "@mui/icons-material/FlagCircle";
 
 const story = [11, 1, 1, 1, 1];
 const Middelpart = () => {
@@ -21,7 +23,7 @@ const Middelpart = () => {
     setOpenCreatePostModal(true);
     console.log("Open the post model");
   };
-
+  
   useEffect(() => {
     dispatch(getALlPostAction());
   }, [post.newComment]);
@@ -54,19 +56,31 @@ const Middelpart = () => {
             <IconButton color="primary" onClick={handleOpenCreatePostModel}>
               <ImageIcon />
             </IconButton>
-            <span>media</span>
+            <span>Photos</span>
           </div>
           <div className="flex items-center">
             <IconButton color="primary" onClick={handleOpenCreatePostModel}>
               <VideocamIcon />
             </IconButton>
-            <span>video</span>
+            <span>videos</span>
           </div>
           <div className="flex items-center">
             <IconButton color="primary" onClick={handleOpenCreatePostModel}>
-              <ArticleIcon />
+              <FlagCircleIcon />
             </IconButton>
-            <span>write post</span>
+            <span>Goals</span>
+          </div>
+          <div className="flex items-center">
+            <IconButton color="primary" onClick={handleOpenCreatePostModel}>
+              <FitnessCenterIcon />
+            </IconButton>
+            <span>Status</span>
+          </div>
+          <div className="flex items-center">
+            <IconButton color="primary" onClick={handleOpenCreatePostModel}>
+              <LunchDiningIcon />
+            </IconButton>
+            <span>Meals</span>
           </div>
         </div>
       </Card>

@@ -4,6 +4,7 @@ import { Avatar, Divider, Button, Card, Popover, MenuItem } from "@mui/material"
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { red } from "@mui/material/colors";
 
 const Sidebar = () => {
   const {auth}=useSelector(store=>store)
@@ -53,7 +54,25 @@ const Sidebar = () => {
         <Divider />
         <div className="flex items-center justify-between pl-5">
           <div className="flex items-center space-x-3">
-            <Avatar src="" />
+            {
+              auth.user?.proImage === "" ? (
+                <Avatar
+                  sx={{
+                    height: "3rem",
+                    width: "3rem",
+                    fontSize: "1rem",
+                    bgcolor: red[500]
+                  }}
+                >
+                  {auth.user.firstName[0]}
+                </Avatar>
+              ) : (
+                <Avatar
+                  sx={{ width: "3rem", height: "3rem" }}
+                  src={auth.user?.proImage}
+                ></Avatar>
+              )
+            }
             <div>
               <p className="font-bold">{auth.user?.firstName + " " + auth.user?.lastName}</p>
               <p className="opacity-70">@{auth.user?.firstName.toLowerCase() + "_" + auth.user?.lastName.toLowerCase()}</p>
