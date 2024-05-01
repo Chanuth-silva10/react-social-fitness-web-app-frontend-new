@@ -15,34 +15,29 @@ export const navigationMenu=[
         path:"/"
     },
     {
-        title:"Reels",
-        icon:<ExploreIcon/>,
-        path:"/reels"
-    },
-    {
-        title:"Create Reels",
+        title:"Meal Plans",
         icon:<ControlePointIcon/>,
-        path:"/create-reels"
+        path:"/meal-plans"
     },
     {
-        title:"Notification",
-        icon:<NotificationsIcon/>,
-        path:"/"
-    },
-    {
-        title:"Message",
+        title:"WorkOut Goals",
         icon:<MessageIcon/>,
-        path:"/"
+        path:"/workout-goals"
     },
     {
-        title:"Lists",
+        title:"WorkOut Status",
         icon:<ListAltIcon/>,
-        path:"/"
+        path:"/workout-status"
     },
     {
         title:"Communities",
         icon:<GroupIcon/>,
-        path:"/"
+        path:"/communities"
+    },
+    {
+        title:"Notification",
+        icon:<NotificationsIcon/>,
+        path:"/notification"
     },
     {
         title:"Profile",

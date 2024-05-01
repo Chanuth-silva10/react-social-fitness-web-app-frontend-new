@@ -24,6 +24,9 @@ const Sidebar = () => {
     if(item.title==="Profile"){
       navigate(`/profile/${auth.user?.id}`)
     }
+    if(item.title==="Home"){
+      navigate(`/`)
+    }
   }
 
   const open = Boolean(anchorEl);

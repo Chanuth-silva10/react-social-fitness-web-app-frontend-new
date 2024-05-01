@@ -3,8 +3,6 @@ import React from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Middelpart from "../../components/Middelpart/Middelpart";
 import { Route, Routes, useLocation } from "react-router-dom";
-import Reels from "../../components/Reels/Reels";
-import CreateReelsFrom from "../../components/Reels/CreateReelsFrom";
 import HomeRight from "../../components/HomeRight/HomeRight";
 import Profile from "../Profile/Profile";
 import { useDispatch, useSelector } from "react-redux";
@@ -31,8 +29,6 @@ const HomePage = () => {
         >
           <Routes>
             <Route path="/" element={<Middelpart />}></Route>
-            <Route path="/reels" element={<Reels />}></Route>
-            <Route path="/create-reels" element={<CreateReelsFrom />}></Route>
             <Route path="/profile/:id" element={<Profile />}></Route>
           </Routes>
         </Grid>

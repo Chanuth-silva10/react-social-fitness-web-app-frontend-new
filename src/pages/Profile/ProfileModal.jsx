@@ -33,6 +33,7 @@ export default function ProfileModal({ open, handleClose }) {
     initialValues: {
       firstName: auth.user?.firstName || "",
       lastName: auth.user?.lastName || "",
+      proImage:auth.user?.proImage || ""
     },
     onSubmit: (values) => {
       console.log("values", values);
@@ -71,7 +72,7 @@ export default function ProfileModal({ open, handleClose }) {
                 <Avatar
                   className="transform -translate-y-24"
                   sx={{ width: "10rem", height: "10rem" }}
-                  src="https://res.cloudinary.com/djnpm1f5w/image/upload/v1695705921/avatars/aayblppn2bidwlfvqynb.jpg"
+                  src={formik.values.proImage}
                 />
               </div>
             </div>

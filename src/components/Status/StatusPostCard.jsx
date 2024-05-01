@@ -26,7 +26,7 @@ import {
 import { comment } from "postcss";
 import { isLikedByReqUser } from "../../utils/isLikedByReqUser";
 
-const PostCard = ({ item }) => {
+const StatusPostCard = ({ item }) => {
   const [showComments, setShowComments] = useState(false);
   const dispatch = useDispatch();
   const { post, auth } = useSelector((store) => store);
@@ -83,22 +83,18 @@ const PostCard = ({ item }) => {
         }
       />
 
-      {item.image !== null ? (
-        <img
-          className="w-full max-h-[30rem] object-cover object-top"
-          src={item.image}
-          alt=""
-        />
-      ) : (
-        <video
-          controls
-          className="w-full h-full"
-          src="https://videos.pexels.com/video-files/855828/855828-sd_640_360_30fps.mp4"
-        ></video>
-      )}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {item.caption}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {item.distanceRun}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {item.pushupsCompleted}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {item.weightLifted}
         </Typography>
       </CardContent>
       <CardActions className="flex justify-between" disableSpacing>
@@ -142,19 +138,11 @@ const PostCard = ({ item }) => {
           <div className="mx-3 my-5 space-y-2 text-xs">
             {item.comments?.map((comment) => (
               <div className="flex items-center space-x-5">
-                {comment.user?.proImage === "" ? (
-                  <Avatar
-                    sx={{ height: "2rem", width: "2rem", fontSize: ".7rem" }}
-                  >
-                    {comment.user.firstName[0]}
-                  </Avatar>
-                ) : (
-                  <Avatar
-                    sx={{ width: "2rem", height: "2rem" }}
-                    src={comment.user?.proImage}
-                  ></Avatar>
-                )}
-
+                <Avatar
+                  sx={{ height: "2rem", width: "2rem", fontSize: ".7rem" }}
+                >
+                  {comment.user.firstName[0]}
+                </Avatar>
                 <p>{comment.content}</p>
               </div>
             ))}
@@ -165,4 +153,4 @@ const PostCard = ({ item }) => {
   );
 };
 
-export default PostCard;
+export default StatusPostCard;

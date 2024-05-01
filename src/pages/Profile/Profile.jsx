@@ -1,31 +1,55 @@
 import { Avatar, Box, Button, Card, Tab, Tabs } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import PostCard from "../../components/Post/PostCard";
-import UserReelCard from "../../components/Reels/UserReelCard";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ProfileModal from "./ProfileModal";
+import { getALlPostAction } from "../../Redux/Post/post.action";
+import { getALlMealPlanPostAction } from "../../Redux/MealPlan/mealPlan.action";
+import MealPostCard from "../../components/MealPlan/MealPostCard";
+import StatusPostCard from "../../components/Status/StatusPostCard";
+import GoalPostCard from "../../components/Goal/GoalPostCard";
+import { getALlStatusPostAction } from "../../Redux/Status/status.action";
+import { getALlGoalPostAction } from "../../Redux/Goal/goal.action";
 
 const tabs = [
   { value: "post", name: "post" },
-  { value: "reels", name: "Reels" },
-  { value: "saved", name: "Saved" },
+  { value: "goal", name: "Work Goal" },
+  { value: "status", name: "Work Status" },
+  { value: "meals", name: "Meal Plan" },
 ];
 
-const posts = [1, 1, 1, 1, 1];
-const reels = [1, 1, 1, 1, 1];
-const savedPost = [1, 1, 1, 1, 1];
 const Profile = () => {
   const { id } = useParams();
   const [open, setOpen] = React.useState(false);
   const handleOpenProfileModal = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const {auth}=useSelector(store=>store)
+  const { auth, post, meal, goal, status } = useSelector((store) => store);
   const [value, setValue] = React.useState("post");
+  const dispatch = useDispatch();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const userPosts = post.posts.filter((item) => item.user.id === auth.user.id);
+  const userMealPosts = meal.posts.filter(
+    (item) => item.user.id === auth.user.id
+  );
+  const userGoalPosts = goal.posts.filter(
+    (item) => item.user.id === auth.user.id
+  );
+  const userStatusPosts = status.posts.filter(
+    (item) => item.user.id === auth.user.id
+  );
+
+  useEffect(() => {
+    dispatch(getALlPostAction());
+    dispatch(getALlMealPlanPostAction());
+    dispatch(getALlStatusPostAction());
+    dispatch(getALlGoalPostAction());
+  }, [post.newComment]);
+
   return (
     <Card className="my-10 w-[70%]">
       <div className="rounded-md">
@@ -40,10 +64,14 @@ const Profile = () => {
           <Avatar
             className="transform -translate-y-24"
             sx={{ width: "10rem", height: "10rem" }}
-            src=""
+            src={auth.user?.proImage}
           />
           {true ? (
-            <Button sx={{ borderRadius: "20px" }} variant="outlined" onClick={handleOpenProfileModal}>
+            <Button
+              sx={{ borderRadius: "20px" }}
+              variant="outlined"
+              onClick={handleOpenProfileModal}
+            >
               Edit Profile
             </Button>
           ) : (
@@ -54,8 +82,15 @@ const Profile = () => {
         </div>
         <div className="p-5">
           <div>
-            <h1 className="py-1 text-xl font-bold">{auth.user?.firstName + " " + auth.user?.lastName}</h1>
-            <p>@{auth.user?.firstName.toLowerCase() + "_" + auth.user?.lastName.toLowerCase()}</p>
+            <h1 className="py-1 text-xl font-bold">
+              {auth.user?.firstName + " " + auth.user?.lastName}
+            </h1>
+            <p>
+              @
+              {auth.user?.firstName.toLowerCase() +
+                "_" +
+                auth.user?.lastName.toLowerCase()}
+            </p>
           </div>
           <div className="flex items-center gap-5 py-3">
             <span>41 post</span>
@@ -85,23 +120,33 @@ const Profile = () => {
         <div className="flex justify-center">
           {value === "post" ? (
             <div className="space-y-5 w-[70%] my-10">
-              {posts.map((item) => (
+              {userPosts.map((item) => (
                 <div className="border rounded-md border-slate-100">
-                  <PostCard />
+                  <PostCard item={item} />
                 </div>
               ))}
             </div>
-          ) : value === "reels" ? (
-            <div className="flex flex-wrap justify-center gap-2 my-10">
-              {reels.map((item) => (
-                <UserReelCard />
+          ) : value === "meals" ? (
+            <div className="space-y-5 w-[70%] my-10">
+              {userMealPosts.map((item) => (
+                <div className="border rounded-md border-slate-100">
+                  <MealPostCard item={item} />
+                </div>
               ))}
             </div>
-          ) : value === "saved" ? (
+          ) : value === "status" ? (
             <div className="space-y-5 w-[70%] my-10">
-              {savedPost.map((item) => (
+              {userStatusPosts.map((item) => (
                 <div className="border rounded-md border-slate-100">
-                  <PostCard />
+                  <StatusPostCard item={item} />
+                </div>
+              ))}
+            </div>
+          ) : value === "goal" ? (
+            <div className="space-y-5 w-[70%] my-10">
+              {userGoalPosts.map((item) => (
+                <div className="border rounded-md border-slate-100">
+                  <GoalPostCard item={item} />
                 </div>
               ))}
             </div>
