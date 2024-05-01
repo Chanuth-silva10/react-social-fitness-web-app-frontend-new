@@ -13,8 +13,11 @@ import React, { useState } from "react";
 import ImageIcon from "@mui/icons-material/Image";
 import VideoIcon from "@mui/icons-material/VideoCall";
 import { uploadToCloudinary } from "../../utils/uploadToCloudniry";
-import { useDispatch } from "react-redux";
-import { createCommentAction, createPostAction } from "../../Redux/Post/post.action";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  createCommentAction,
+  createPostAction,
+} from "../../Redux/Post/post.action";
 
 const style = {
   position: "absolute",
@@ -31,10 +34,11 @@ const style = {
 };
 
 const CreatePostModal = ({ handleClose, open }) => {
+  const dispatch = useDispatch();
+  const { auth } = useSelector((store) => store);
   const [selectedImage, setSelectedImage] = useState();
   const [selectedVideo, setSelectedVideo] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const dispatch=useDispatch();
 
   const handleSelectImage = async (event) => {
     setIsLoading(true);
@@ -46,10 +50,12 @@ const CreatePostModal = ({ handleClose, open }) => {
 
   const handleSelectVideo = async (event) => {
     setIsLoading(true);
-    const videoUrl = await uploadToCloudinary(event.target.files[0], "image");
+    const videoUrl = await uploadToCloudinary(event.target.files[0], "video");
+    console.log(videoUrl);
+    console.log(event);
     setSelectedVideo(videoUrl);
     setIsLoading(false);
-    formik.setFieldValue("image", videoUrl);
+    formik.setFieldValue("video", videoUrl);
   };
 
   const formik = useFormik({
@@ -59,7 +65,7 @@ const CreatePostModal = ({ handleClose, open }) => {
       video: "",
     },
     onSubmit: (values) => {
-        dispatch(createPostAction(values));
+      dispatch(createPostAction(values));
     },
   });
 
@@ -76,7 +82,7 @@ const CreatePostModal = ({ handleClose, open }) => {
             <div className="flex items-center space-x-4">
               <Avatar />
               <div>
-                <p className="text-lg font-bold">Chanuth with Social</p>
+                <p className="text-lg font-bold">Chanuth with Social@Fitness</p>
                 <p className="text-sm">@Chanuth</p>
               </div>
             </div>
@@ -115,7 +121,7 @@ const CreatePostModal = ({ handleClose, open }) => {
                   id="video-input"
                 />
                 <label htmlFor="video-input">
-                  <IconButton color="primary">
+                  <IconButton color="primary" component="span">
                     <VideoIcon />
                   </IconButton>
                 </label>
@@ -125,6 +131,14 @@ const CreatePostModal = ({ handleClose, open }) => {
             {selectedImage && (
               <div>
                 <img className="h-[10rem]" src={selectedImage} alt="" />
+              </div>
+            )}
+            {selectedVideo && (
+              <div>
+                <video className="h-[10rem]" controls>
+                  <source src={selectedVideo} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
               </div>
             )}
             <div className="flex justify-end w-full">

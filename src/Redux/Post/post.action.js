@@ -21,6 +21,7 @@ export const createPostAction = (postData) => async (dispatch) => {
   dispatch({ type: CREATE_POST_REQUEST });
   try {
     const { data } = await api.post("/api/posts", postData);
+    console.log("Submit Data",data);
     dispatch({ type: CREATE_POST_SUCCESS, payload: data });
     console.log("Created post ", data);
   } catch (error) {

@@ -23,7 +23,7 @@ const Middelpart = () => {
     setOpenCreatePostModal(true);
     console.log("Open the post model");
   };
-  
+
   useEffect(() => {
     dispatch(getALlPostAction());
   }, [post.newComment]);
@@ -56,13 +56,7 @@ const Middelpart = () => {
             <IconButton color="primary" onClick={handleOpenCreatePostModel}>
               <ImageIcon />
             </IconButton>
-            <span>Photos</span>
-          </div>
-          <div className="flex items-center">
-            <IconButton color="primary" onClick={handleOpenCreatePostModel}>
-              <VideocamIcon />
-            </IconButton>
-            <span>videos</span>
+            <span>Post</span>
           </div>
           <div className="flex items-center">
             <IconButton color="primary" onClick={handleOpenCreatePostModel}>

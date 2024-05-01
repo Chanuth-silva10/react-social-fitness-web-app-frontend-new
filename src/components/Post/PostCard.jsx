@@ -27,9 +27,10 @@ import { comment } from "postcss";
 import { isLikedByReqUser } from "../../utils/isLikedByReqUser";
 
 const PostCard = ({ item }) => {
+  console.log(item.video);
   const [showComments, setShowComments] = useState(false);
   const dispatch = useDispatch();
-  const { post, auth } = useSelector((store) => store);
+  const { auth } = useSelector((store) => store);
 
   const handleShowComment = () => setShowComments(!showComments);
 
@@ -57,7 +58,7 @@ const PostCard = ({ item }) => {
                 height: "3rem",
                 width: "3rem",
                 fontSize: "1rem",
-                bgcolor: red[500]
+                bgcolor: red[500],
               }}
             >
               {item.user.firstName[0]}
@@ -83,19 +84,16 @@ const PostCard = ({ item }) => {
         }
       />
 
-      {item.image !== null ? (
+      {item.video == null ? (
         <img
-          className="w-full max-h-[30rem] object-cover object-top"
-          src={item.image}
-          alt=""
-        />
+        className="w-full max-h-[30rem] object-cover object-top"
+        src={item.image}
+        alt=""
+      />
       ) : (
-        <video
-          controls
-          className="w-full h-full"
-          src="https://videos.pexels.com/video-files/855828/855828-sd_640_360_30fps.mp4"
-        ></video>
+        <video controls className="w-full h-full" src={item.video}></video>
       )}
+
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {item.caption}
