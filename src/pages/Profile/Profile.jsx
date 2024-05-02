@@ -98,7 +98,6 @@ const Profile = () => {
           <div className="flex items-center gap-5 py-3">
             <span>41 post</span>
             <span>35 followrs</span>
-            <span>5 following</span>
           </div>
           <div>
             <p>fhhfhfbshcbhsdbchd cdcdhcud cudhcuyhduc uhudhcudddj</p>
