@@ -40,12 +40,24 @@ const style = {
   outline: "none",
 };
 
+const tabs = [
+  { value: "post", name: "post" },
+  { value: "goal", name: "Work Goal" },
+  { value: "status", name: "Work Status" },
+  { value: "meals", name: "Meal Plan" },
+];
+
 const CreatePostModal = ({ handleClose, open }) => {
   const dispatch = useDispatch();
   const { auth } = useSelector((store) => store);
   const [selectedImage, setSelectedImage] = useState();
   const [selectedVideo, setSelectedVideo] = useState();
   const [isLoading, setIsLoading] = useState(false);
+  const [value, setValue] = React.useState("post");
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const handleSelectImage = async (event) => {
     setIsLoading(true);
@@ -84,159 +96,231 @@ const CreatePostModal = ({ handleClose, open }) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <form onSubmit={formik.handleSubmit}>
+        <div className="flex items-center space-x-4">
+          {auth.user?.proImage === "" ? (
+            <Avatar
+              sx={{
+                height: "3rem",
+                width: "3rem",
+                fontSize: "1rem",
+                bgcolor: red[500],
+              }}
+            >
+              {auth.user.firstName[0]}
+            </Avatar>
+          ) : (
+            <Avatar
+              sx={{ width: "3rem", height: "3rem" }}
+              src={auth.user?.proImage}
+            ></Avatar>
+          )}
           <div>
-            <div className="flex items-center space-x-4">
-              {auth.user?.proImage === "" ? (
-                <Avatar
-                  sx={{
-                    height: "3rem",
-                    width: "3rem",
-                    fontSize: "1rem",
-                    bgcolor: red[500],
-                  }}
-                >
-                  {auth.user.firstName[0]}
-                </Avatar>
-              ) : (
-                <Avatar
-                  sx={{ width: "3rem", height: "3rem" }}
-                  src={auth.user?.proImage}
-                ></Avatar>
-              )}
-              <div>
-                <p className="text-lg font-bold">
-                  {auth.user.firstName} with Social Fitness
-                </p>
-                <p className="text-sm">@{auth.user.firstName}</p>
-              </div>
-            </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            
-            <textarea
-              className="outline-none w-full mt-5 p-2 
-              bg-transparent border border-[#3b4054] rounded-sm"
-              placeholder="Write Description..."
-              name="caption"
-              id=""
-              onChange={formik.handleChange}
-              value={formik.values.caption}
-              rows="4"
-            ></textarea>
-            <div className="flex items-center mt-5 space-x-5">
-              <div>
-                <input
-                  type="file"
-                  accept="image/*"
-                  onChange={handleSelectImage}
-                  style={{ display: "none" }}
-                  id="image-input"
-                />
-                <label htmlFor="image-input">
-                  <IconButton color="primary" component="span">
-                    <ImageIcon />
-                  </IconButton>
-                </label>
-                <span>Image</span>
-              </div>
-              <div>
-                <input
-                  type="file"
-                  accept="video/*"
-                  onChange={handleSelectVideo}
-                  style={{ display: "none" }}
-                  id="video-input"
-                />
-                <label htmlFor="video-input">
-                  <IconButton color="primary" component="span">
-                    <VideoIcon />
-                  </IconButton>
-                </label>
-                <span>Video</span>
-              </div>
-              <div>
-                <input
-                  type="file"
-                  accept="video/*"
-                  onChange={handleSelectVideo}
-                  style={{ display: "none" }}
-                  id="video-input"
-                />
-                <label htmlFor="video-input">
-                  <IconButton color="primary" component="span">
-                    <FlagCircleIcon />
-                  </IconButton>
-                </label>
-                <span>Goals</span>
-              </div>
-              <div>
-                <input
-                  type="file"
-                  accept="video/*"
-                  onChange={handleSelectVideo}
-                  style={{ display: "none" }}
-                  id="video-input"
-                />
-                <label htmlFor="video-input">
-                  <IconButton color="primary" component="span">
-                    <FitnessCenterIcon />
-                  </IconButton>
-                </label>
-                <span>Status</span>
-              </div>
-              <div>
-                <input
-                  type="file"
-                  accept="video/*"
-                  onChange={handleSelectVideo}
-                  style={{ display: "none" }}
-                  id="video-input"
-                />
-                <label htmlFor="video-input">
-                  <IconButton color="primary" component="span">
-                    <LunchDiningIcon />
-                  </IconButton>
-                </label>
-                <span>Meals</span>
-              </div>
-            </div>
-            {selectedImage && (
-              <div className="flex items-center mt-5">
-                <img className="h-[10rem]" src={selectedImage} alt="" />
-              </div>
-            )}
-            {selectedVideo && (
-              <div className="flex items-center mt-5">
-                <video className="h-[10rem]" controls>
-                  <source src={selectedVideo} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            )}
-            <div className="flex justify-end w-full mt-8">
-              <Button
-                variant="contained"
-                type="submit"
-                sx={{ borderRadius: "1.5rem" }}
-              >
-                Post and Share
-              </Button>
-            </div>
+            <p className="text-lg font-bold">
+              {auth.user.firstName} with Social Fitness
+            </p>
+            <p className="text-sm">@{auth.user.firstName}</p>
           </div>
-        </form>
+        </div>
+
+        <section>
+          <Box sx={{ width: "100%" }}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              aria-label="wrapped label tabs example"
+            >
+              {tabs.map((item) => (
+                <Tab value={item.value} label={item.name} wrapped></Tab>
+              ))}
+            </Tabs>
+          </Box>
+        </section>
+        <Box
+          sx={{ width: "100%", borderBottom: 1, borderColor: "divider" }}
+        ></Box>
+        <div className="flex justify-center">
+          {value === "post" ? (
+            <form
+              onSubmit={formik.handleSubmit}
+              className="space-y-4 w-[100%] my-4"
+            >
+              <div>
+                <textarea
+                  className="outline-none w-full mt-5 p-2 
+                bg-transparent border border-[#3b4054] rounded-sm"
+                  placeholder="Write Your Post ..."
+                  name="caption"
+                  id=""
+                  onChange={formik.handleChange}
+                  value={formik.values.caption}
+                  rows="4"
+                ></textarea>
+                <div className="flex items-center mt-5 space-x-5">
+                  <div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleSelectImage}
+                      style={{ display: "none" }}
+                      id="image-input"
+                    />
+                    <label htmlFor="image-input">
+                      <IconButton color="primary" component="span">
+                        <ImageIcon />
+                      </IconButton>
+                    </label>
+                    <span>Image</span>
+                  </div>
+                  <div>
+                    <input
+                      type="file"
+                      accept="video/*"
+                      onChange={handleSelectVideo}
+                      style={{ display: "none" }}
+                      id="video-input"
+                    />
+                    <label htmlFor="video-input">
+                      <IconButton color="primary" component="span">
+                        <VideoIcon />
+                      </IconButton>
+                    </label>
+                    <span>Video</span>
+                  </div>
+                </div>
+                {selectedImage && (
+                  <div className="flex items-center mt-5">
+                    <img className="h-[10rem]" src={selectedImage} alt="" />
+                  </div>
+                )}
+                {selectedVideo && (
+                  <div className="flex items-center mt-5">
+                    <video className="h-[10rem]" controls>
+                      <source src={selectedVideo} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                )}
+                <div className="flex justify-end w-full mt-8">
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    sx={{ borderRadius: "1.5rem" }}
+                  >
+                    Post and Share
+                  </Button>
+                </div>
+              </div>
+            </form>
+          ) : value === "meals" ? (
+            <form
+              onSubmit={formik.handleSubmit}
+              className="space-y-4 w-[100%] my-4"
+            >
+              <div>
+                <textarea
+                  className="outline-none w-full mt-5 p-2 
+              bg-transparent border border-[#3b4054] rounded-sm"
+                  placeholder="Write Description..."
+                  name="caption"
+                  id=""
+                  onChange={formik.handleChange}
+                  value={formik.values.caption}
+                  rows="4"
+                ></textarea>
+                <div className="flex items-center mt-5 space-x-5">
+                  <div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleSelectImage}
+                      style={{ display: "none" }}
+                      id="image-input"
+                    />
+                    <label htmlFor="image-input">
+                      <IconButton color="primary" component="span">
+                        <LunchDiningIcon />
+                      </IconButton>
+                    </label>
+                    <span>Image</span>
+                  </div>
+                </div>
+                {selectedImage && (
+                  <div className="flex items-center mt-5">
+                    <img className="h-[10rem]" src={selectedImage} alt="" />
+                  </div>
+                )}
+
+                <div className="flex justify-end w-full mt-8">
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    sx={{ borderRadius: "1.5rem" }}
+                  >
+                    Post and Share
+                  </Button>
+                </div>
+              </div>
+            </form>
+          ) : value === "status" ? (
+            <form
+              onSubmit={formik.handleSubmit}
+              className="space-y-4 w-[100%] my-4"
+            >
+              <div>
+                <textarea
+                  className="outline-none w-full mt-5 p-2 
+              bg-transparent border border-[#3b4054] rounded-sm"
+                  placeholder="Write Status Post Description..."
+                  name="caption"
+                  id=""
+                  onChange={formik.handleChange}
+                  value={formik.values.caption}
+                  rows="4"
+                ></textarea>
+
+                <div className="flex justify-end w-full mt-8">
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    sx={{ borderRadius: "1.5rem" }}
+                  >
+                    Status Post and Share
+                  </Button>
+                </div>
+              </div>
+            </form>
+          ) : value === "goal" ? (
+            <form
+              onSubmit={formik.handleSubmit}
+              className="space-y-4 w-[100%] my-4"
+            >
+              <div>
+                <textarea
+                  className="outline-none w-full mt-5 p-2 
+              bg-transparent border border-[#3b4054] rounded-sm"
+                  placeholder="Write Description..."
+                  name="caption"
+                  id=""
+                  onChange={formik.handleChange}
+                  value={formik.values.caption}
+                  rows="4"
+                ></textarea>
+                <div className="flex justify-end w-full mt-8">
+                  <Button
+                    variant="contained"
+                    type="submit"
+                    sx={{ borderRadius: "1.5rem" }}
+                  >
+                    Post and Share
+                  </Button>
+                </div>
+              </div>
+            </form>
+          ) : (
+            ""
+          )}
+        </div>
+
         <Backdrop
           sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
           open={isLoading}

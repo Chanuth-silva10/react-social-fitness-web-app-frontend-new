@@ -84,7 +84,7 @@ const PostCard = ({ item }) => {
         }
       />
 
-      {item.video == null ? (
+      {item.image !== null ? (
         <img
         className="w-full max-h-[30rem] object-cover object-top"
         src={item.image}
