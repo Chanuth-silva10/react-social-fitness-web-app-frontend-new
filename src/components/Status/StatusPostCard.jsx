@@ -8,6 +8,8 @@ import {
   Typography,
   CardActions,
   Divider,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import React, { useState } from "react";
@@ -19,17 +21,18 @@ import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import BookmarkBorderIcon, { BookmarkAdd } from "@mui/icons-material";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  createCommentAction,
-  likePostAction,
-} from "../../Redux/Post/post.action";
 import { comment } from "postcss";
 import { isLikedByReqUser } from "../../utils/isLikedByReqUser";
+import { createStatusCommentAction, deleteStatusPostAction, likeStatusPostAction } from "../../Redux/Status/status.action";
 
 const StatusPostCard = ({ item }) => {
   const [showComments, setShowComments] = useState(false);
   const dispatch = useDispatch();
-  const { post, auth } = useSelector((store) => store);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const { auth } = useSelector((store) => store);
+
+  const loggedInUserId = auth.user.id;
+  const checkPostDeletionPermission = item.user.id === loggedInUserId;
 
   const handleShowComment = () => setShowComments(!showComments);
 
@@ -40,12 +43,20 @@ const StatusPostCard = ({ item }) => {
         content: content,
       },
     };
-    dispatch(createCommentAction(reqData));
+    dispatch(createStatusCommentAction(reqData));
   };
 
   const handleLikePost = () => {
-    dispatch(likePostAction(item.id));
+    dispatch(likeStatusPostAction(item.id));
   };
+
+
+  const handleDeleteGoalPost = () => {
+    dispatch(deleteStatusPostAction(item.id));
+    setAnchorEl(null);
+  };
+
+  const handleUpdatePost = () => {};
 
   return (
     <Card className="">
@@ -70,9 +81,24 @@ const StatusPostCard = ({ item }) => {
           )
         }
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
+          checkPostDeletionPermission && (
+            <div>
+              <IconButton
+                aria-label="settings"
+                onClick={(e) => setAnchorEl(e.currentTarget)}
+              >
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={() => setAnchorEl(null)}
+              >
+                <MenuItem onClick={handleDeleteGoalPost}>Delete Post</MenuItem>
+                <MenuItem onClick={handleUpdatePost}>Edit Post</MenuItem>
+              </Menu>
+            </div>
+          )
         }
         title={item.user.firstName + " " + item.user.lastName}
         subheader={

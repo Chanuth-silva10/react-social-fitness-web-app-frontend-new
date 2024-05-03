@@ -3,6 +3,9 @@ import {
   CREATE_STATUS_POST_FAILURE,
   CREATE_STATUS_POST_REQUEST,
   CREATE_STATUS_POST_SUCCESS,
+  DELETE_STATUS_POST_FAILURE,
+  DELETE_STATUS_POST_REQUEST,
+  DELETE_STATUS_POST_SUCCESS,
   GET_ALL_STATUS_POST_FAILURE,
   GET_ALL_STATUS_POST_REQUEST,
   GET_ALL_STATUS_POST_SUCCESS,
@@ -18,7 +21,8 @@ const initialState = {
   posts: [],
   like: null,
   comments: [],
-  newComment:null,
+  newComment: null,
+  message: null,
 };
 
 export const statusReducer = (state = initialState, action) => {
@@ -26,6 +30,7 @@ export const statusReducer = (state = initialState, action) => {
     case CREATE_STATUS_POST_REQUEST:
     case GET_ALL_STATUS_POST_REQUEST:
     case LIKE_STATUS_POST_REQUEST:
+    case DELETE_STATUS_POST_REQUEST:
       return { ...state, loading: true, error: null };
     case CREATE_STATUS_POST_SUCCESS:
       return {
@@ -34,6 +39,13 @@ export const statusReducer = (state = initialState, action) => {
         posts: [action.payload, ...state.posts],
         loading: false,
         error: null,
+      };
+    case DELETE_STATUS_POST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        message: action.payload,
       };
     case GET_ALL_STATUS_POST_SUCCESS:
       return {
@@ -57,13 +69,14 @@ export const statusReducer = (state = initialState, action) => {
     case CREATE_COMMENT_STATUS_POST_SUCCESS:
       return {
         ...state,
-        newComment:action.payload,
+        newComment: action.payload,
         loading: false,
         error: null,
       };
     case CREATE_STATUS_POST_FAILURE:
     case GET_ALL_STATUS_POST_FAILURE:
     case LIKE_STATUS_POST_FAILURE:
+    case DELETE_STATUS_POST_FAILURE:
       return { ...state, loading: false, error: action.payload };
     default:
       return state;

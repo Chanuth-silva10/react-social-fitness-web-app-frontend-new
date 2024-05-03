@@ -10,6 +10,7 @@ import {
   Card,
   Tab,
   Tabs,
+  TextField,
 } from "@mui/material";
 import { useFormik } from "formik";
 import React, { useState } from "react";
@@ -25,6 +26,9 @@ import { red } from "@mui/material/colors";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import FlagCircleIcon from "@mui/icons-material/FlagCircle";
+import { createStatusPostAction } from "../../Redux/Status/status.action";
+import { createMealPlanPostAction } from "../../Redux/MealPlan/mealPlan.action";
+import { createGoalPostAction } from "../../Redux/Goal/goal.action";
 
 const style = {
   position: "absolute",
@@ -67,6 +71,14 @@ const CreatePostModal = ({ handleClose, open }) => {
     formik.setFieldValue("image", imageUrl);
   };
 
+  const handleSelectMealImage = async (event) => {
+    setIsLoading(true);
+    const imageUrl = await uploadToCloudinary(event.target.files[0], "image");
+    setSelectedImage(imageUrl);
+    setIsLoading(false);
+    formikMeals.setFieldValue("image", imageUrl);
+  };
+
   const handleSelectVideo = async (event) => {
     setIsLoading(true);
     const videoUrl = await uploadToCloudinary(event.target.files[0], "video");
@@ -85,6 +97,40 @@ const CreatePostModal = ({ handleClose, open }) => {
     },
     onSubmit: (values) => {
       dispatch(createPostAction(values));
+    },
+  });
+
+  const formikStatus = useFormik({
+    initialValues: {
+      caption: "",
+      distanceRun: "",
+      pushupsCompleted: "",
+      weightLifted: "",
+    },
+    onSubmit: (values) => {
+      dispatch(createStatusPostAction(values));
+    },
+  });
+
+  const formikMeals = useFormik({
+    initialValues: {
+      caption: "",
+      image: "",
+    },
+    onSubmit: (values) => {
+      dispatch(createMealPlanPostAction(values));
+    },
+  });
+
+  const formikGoals = useFormik({
+    initialValues: {
+      caption: "",
+      distanceRun: "",
+      pushupsCompleted: "",
+      weightLifted: "",
+    },
+    onSubmit: (values) => {
+      dispatch(createGoalPostAction(values));
     },
   });
 
@@ -206,14 +252,14 @@ const CreatePostModal = ({ handleClose, open }) => {
                     type="submit"
                     sx={{ borderRadius: "1.5rem" }}
                   >
-                    Post and Share
+                    Post
                   </Button>
                 </div>
               </div>
             </form>
           ) : value === "meals" ? (
             <form
-              onSubmit={formik.handleSubmit}
+              onSubmit={formikMeals.handleSubmit}
               className="space-y-4 w-[100%] my-4"
             >
               <div>
@@ -223,8 +269,8 @@ const CreatePostModal = ({ handleClose, open }) => {
                   placeholder="Write Description..."
                   name="caption"
                   id=""
-                  onChange={formik.handleChange}
-                  value={formik.values.caption}
+                  onChange={formikMeals.handleChange}
+                  value={formikMeals.values.caption}
                   rows="4"
                 ></textarea>
                 <div className="flex items-center mt-5 space-x-5">
@@ -232,7 +278,7 @@ const CreatePostModal = ({ handleClose, open }) => {
                     <input
                       type="file"
                       accept="image/*"
-                      onChange={handleSelectImage}
+                      onChange={handleSelectMealImage}
                       style={{ display: "none" }}
                       id="image-input"
                     />
@@ -256,14 +302,14 @@ const CreatePostModal = ({ handleClose, open }) => {
                     type="submit"
                     sx={{ borderRadius: "1.5rem" }}
                   >
-                    Post and Share
+                    Meals Post
                   </Button>
                 </div>
               </div>
             </form>
           ) : value === "status" ? (
             <form
-              onSubmit={formik.handleSubmit}
+              onSubmit={formikStatus.handleSubmit}
               className="space-y-4 w-[100%] my-4"
             >
               <div>
@@ -273,10 +319,40 @@ const CreatePostModal = ({ handleClose, open }) => {
                   placeholder="Write Status Post Description..."
                   name="caption"
                   id=""
-                  onChange={formik.handleChange}
-                  value={formik.values.caption}
+                  onChange={formikStatus.handleChange}
+                  value={formikStatus.values.caption}
                   rows="4"
                 ></textarea>
+
+                <div className="space-y-2 mt-2">
+                  <TextField
+                    fullWidth
+                    id=""
+                    type="number"
+                    name="distanceRun"
+                    label="Distance Ran (in miles)"
+                    value={formikStatus.values.distanceRun}
+                    onChange={formikStatus.handleChange}
+                  />
+                  <TextField
+                    fullWidth
+                    id=""
+                    type="number"
+                    name="pushupsCompleted"
+                    label="Number of Pushups Completed"
+                    value={formikStatus.values.pushupsCompleted}
+                    onChange={formikStatus.handleChange}
+                  />
+                  <TextField
+                    fullWidth
+                    id=""
+                    type="number"
+                    name="weightLifted"
+                    label="Weight Lifted"
+                    value={formikStatus.values.weightLifted}
+                    onChange={formikStatus.handleChange}
+                  />
+                </div>
 
                 <div className="flex justify-end w-full mt-8">
                   <Button
@@ -284,34 +360,65 @@ const CreatePostModal = ({ handleClose, open }) => {
                     type="submit"
                     sx={{ borderRadius: "1.5rem" }}
                   >
-                    Status Post and Share
+                    Status Post
                   </Button>
                 </div>
               </div>
             </form>
           ) : value === "goal" ? (
             <form
-              onSubmit={formik.handleSubmit}
+              onSubmit={formikGoals.handleSubmit}
               className="space-y-4 w-[100%] my-4"
             >
               <div>
                 <textarea
                   className="outline-none w-full mt-5 p-2 
               bg-transparent border border-[#3b4054] rounded-sm"
-                  placeholder="Write Description..."
+                  placeholder="Write Status Post Description..."
                   name="caption"
                   id=""
-                  onChange={formik.handleChange}
-                  value={formik.values.caption}
+                  onChange={formikGoals.handleChange}
+                  value={formikGoals.values.caption}
                   rows="4"
                 ></textarea>
+
+                <div className="space-y-2 mt-2">
+                  <TextField
+                    fullWidth
+                    id=""
+                    type="number"
+                    name="distanceRun"
+                    label="Distance Ran (in miles)"
+                    value={formikGoals.values.distanceRun}
+                    onChange={formikGoals.handleChange}
+                  />
+                  <TextField
+                    fullWidth
+                    id=""
+                    type="number"
+                    name="pushupsCompleted"
+                    label="Number of Pushups Completed"
+                    value={formikGoals.values.pushupsCompleted}
+                    onChange={formikGoals.handleChange}
+                  />
+                  <TextField
+                    fullWidth
+                    id=""
+                    type="number"
+                    name="weightLifted"
+                    label="Weight Lifted"
+                    value={formikGoals.values.weightLifted}
+                    onChange={formikGoals.handleChange}
+                  />
+                </div>
+
                 <div className="flex justify-end w-full mt-8">
                   <Button
                     variant="contained"
                     type="submit"
                     sx={{ borderRadius: "1.5rem" }}
                   >
-                    Post and Share
+                    Goal Post
                   </Button>
                 </div>
               </div>

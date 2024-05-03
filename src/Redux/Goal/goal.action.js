@@ -6,6 +6,9 @@ import {
   CREATE_GOAL_POST_FAILURE,
   CREATE_GOAL_POST_REQUEST,
   CREATE_GOAL_POST_SUCCESS,
+  DELETE_GOAL_POST_FAILURE,
+  DELETE_GOAL_POST_REQUEST,
+  DELETE_GOAL_POST_SUCCESS,
   GET_ALL_GOAL_POST_FAILURE,
   GET_ALL_GOAL_POST_REQUEST,
   GET_ALL_GOAL_POST_SUCCESS,
@@ -72,5 +75,23 @@ export const createGoalCommentAction = (reqData) => async (dispatch) => {
     console.log("Created post ", data);
   } catch (error) {
     dispatch({ type: CREATE_COMMENT_GOAL_POST_FAILURE, payload: error });
+  }
+};
+
+export const deleteGoalPostAction = (postId) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_GOAL_POST_REQUEST });
+
+    const { data } = await api.delete(`/api/goals/${postId}`);
+    console.log(data);
+    dispatch({
+      type: DELETE_GOAL_POST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_GOAL_POST_FAILURE,
+      payload: error,
+    });
   }
 };

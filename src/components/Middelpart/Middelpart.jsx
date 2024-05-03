@@ -1,4 +1,12 @@
-import { Avatar, Card, IconButton } from "@mui/material";
+import {
+  Avatar,
+  Card,
+  IconButton,
+  Box,
+  Button,
+  Tab,
+  Tabs,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import StoryCircle from "./StoryCircle";
@@ -9,14 +17,33 @@ import { useDispatch, useSelector } from "react-redux";
 import { getALlPostAction } from "../../Redux/Post/post.action";
 import FollowTheSignsIcon from "@mui/icons-material/FollowTheSigns";
 import { red } from "@mui/material/colors";
-import PermMediaIcon from '@mui/icons-material/PermMedia';
+import PermMediaIcon from "@mui/icons-material/PermMedia";
+import { getALlMealPlanPostAction } from "../../Redux/MealPlan/mealPlan.action";
+import { getALlStatusPostAction } from "../../Redux/Status/status.action";
+import { getALlGoalPostAction } from "../../Redux/Goal/goal.action";
+import MealPostCard from "../MealPlan/MealPostCard";
+import StatusPostCard from "../Status/StatusPostCard";
+import GoalPostCard from "../Goal/GoalPostCard";
 
 const story = [11, 1, 1, 1, 1];
+
+const tabs = [
+  { value: "post", name: "post" },
+  { value: "goal", name: "Work Goal" },
+  { value: "status", name: "Work Status" },
+  { value: "meals", name: "Meal Plan" },
+];
+
 const Middelpart = () => {
   const dispatch = useDispatch();
-  const { post, auth } = useSelector((store) => store);
+  const { post, auth, meal, goal, status } = useSelector((store) => store);
   const [openCreatePostModal, setOpenCreatePostModal] = useState();
   const handleCloseCreatePostModal = () => setOpenCreatePostModal(false);
+  const [value, setValue] = React.useState("post");
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   const handleOpenCreatePostModel = () => {
     setOpenCreatePostModal(true);
@@ -26,6 +53,18 @@ const Middelpart = () => {
   useEffect(() => {
     dispatch(getALlPostAction());
   }, [post.newComment]);
+
+  useEffect(() => {
+    dispatch(getALlMealPlanPostAction());
+  }, [meal.newComment]);
+
+  useEffect(() => {
+    dispatch(getALlGoalPostAction());
+  }, [goal.newComment]);
+
+  useEffect(() => {
+    dispatch(getALlStatusPostAction());
+  }, [status.newComment]);
 
   return (
     <div className="px-20">
@@ -73,10 +112,59 @@ const Middelpart = () => {
           </div>
         </div>
       </Card>
+      <Box sx={{ width: "100%", borderTop: 1, borderColor: "divider" }}></Box>
+      <section>
+        <Box sx={{ width: "100%" }}>
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            aria-label="wrapped label tabs example"
+          >
+            {tabs.map((item) => (
+              <Tab value={item.value} label={item.name} wrapped></Tab>
+            ))}
+          </Tabs>
+        </Box>
+      </section>
+      <Box
+        sx={{ width: "100%", borderBottom: 1, borderColor: "divider" }}
+      ></Box>
       <div className="mt-5 space-y-5">
-        {post.posts.map((item) => (
-          <PostCard item={item} />
-        ))}
+        {value === "post" ? (
+          <div className="space-y-5 w-[100%] my-10">
+            {post.posts.map((item) => (
+              <div className="border rounded-md border-slate-100">
+                <PostCard item={item} />
+              </div>
+            ))}
+          </div>
+        ) : value === "meals" ? (
+          <div className="space-y-5 w-[100%] my-10">
+            {meal.posts.map((item) => (
+              <div className="border rounded-md border-slate-100">
+                <MealPostCard item={item} />
+              </div>
+            ))}
+          </div>
+        ) : value === "status" ? (
+          <div className="space-y-5 w-[100%] my-10">
+            {status.posts.map((item) => (
+              <div className="border rounded-md border-slate-100">
+                <StatusPostCard item={item} />
+              </div>
+            ))}
+          </div>
+        ) : value === "goal" ? (
+          <div className="space-y-5 w-[100%] my-10">
+            {goal.posts.map((item) => (
+              <div className="border rounded-md border-slate-100">
+                <GoalPostCard item={item} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          ""
+        )}
       </div>
 
       <div>

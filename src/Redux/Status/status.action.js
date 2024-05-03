@@ -6,6 +6,9 @@ import {
   CREATE_STATUS_POST_FAILURE,
   CREATE_STATUS_POST_REQUEST,
   CREATE_STATUS_POST_SUCCESS,
+  DELETE_STATUS_POST_FAILURE,
+  DELETE_STATUS_POST_REQUEST,
+  DELETE_STATUS_POST_SUCCESS,
   GET_ALL_STATUS_POST_FAILURE,
   GET_ALL_STATUS_POST_REQUEST,
   GET_ALL_STATUS_POST_SUCCESS,
@@ -72,5 +75,23 @@ export const createStatusCommentAction = (reqData) => async (dispatch) => {
     console.log("Created post ", data);
   } catch (error) {
     dispatch({ type: CREATE_COMMENT_STATUS_POST_FAILURE, payload: error });
+  }
+};
+
+export const deleteStatusPostAction = (postId) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_STATUS_POST_REQUEST });
+
+    const { data } = await api.delete(`/api/status/${postId}`);
+    console.log(data);
+    dispatch({
+      type: DELETE_STATUS_POST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_STATUS_POST_FAILURE,
+      payload: error,
+    });
   }
 };

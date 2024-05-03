@@ -6,6 +6,9 @@ import {
   CREATE_MEAL_PLAN_POST_FAILURE,
   CREATE_MEAL_PLAN_POST_REQUEST,
   CREATE_MEAL_PLAN_POST_SUCCESS,
+  DELETE_MEAL_POST_FAILURE,
+  DELETE_MEAL_POST_REQUEST,
+  DELETE_MEAL_POST_SUCCESS,
   GET_ALL_MEAL_PLAN_POST_FAILURE,
   GET_ALL_MEAL_PLAN_POST_REQUEST,
   GET_ALL_MEAL_PLAN_POST_SUCCESS,
@@ -72,5 +75,23 @@ export const createMealPlanCommentAction = (reqData) => async (dispatch) => {
     console.log("Created post ", data);
   } catch (error) {
     dispatch({ type: CREATE_MEAL_PLAN_COMMENT_FAILURE, payload: error });
+  }
+};
+
+export const deleteMealPostAction = (postId) => async (dispatch) => {
+  try {
+    dispatch({ type: DELETE_MEAL_POST_REQUEST });
+
+    const { data } = await api.delete(`/api/meals/${postId}`);
+    console.log(data);
+    dispatch({
+      type: DELETE_MEAL_POST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_MEAL_POST_FAILURE,
+      payload: error,
+    });
   }
 };

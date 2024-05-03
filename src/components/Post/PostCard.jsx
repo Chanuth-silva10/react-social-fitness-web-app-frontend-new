@@ -8,6 +8,8 @@ import {
   Typography,
   CardActions,
   Divider,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import React, { useState } from "react";
@@ -16,21 +18,25 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShareIcon from "@mui/icons-material/Share";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
-import BookmarkBorderIcon, { BookmarkAdd } from "@mui/icons-material";
+import BookmarkBorderIcon from "@mui/icons-material";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createCommentAction,
+  deletePostAction,
   likePostAction,
 } from "../../Redux/Post/post.action";
 import { comment } from "postcss";
 import { isLikedByReqUser } from "../../utils/isLikedByReqUser";
 
 const PostCard = ({ item }) => {
-  console.log(item.video);
   const [showComments, setShowComments] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
   const { auth } = useSelector((store) => store);
+
+  const loggedInUserId = auth.user.id;
+  const checkPostDeletionPermission = item.user.id === loggedInUserId;
 
   const handleShowComment = () => setShowComments(!showComments);
 
@@ -47,6 +53,13 @@ const PostCard = ({ item }) => {
   const handleLikePost = () => {
     dispatch(likePostAction(item.id));
   };
+
+  const handleDeletePost = () => {
+    dispatch(deletePostAction(item.id));
+    setAnchorEl(null);
+  };
+
+  const handleUpdatePost = () => {};
 
   return (
     <Card className="">
@@ -71,9 +84,24 @@ const PostCard = ({ item }) => {
           )
         }
         action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
+          checkPostDeletionPermission && (
+            <div>
+              <IconButton
+                aria-label="settings"
+                onClick={(e) => setAnchorEl(e.currentTarget)}
+              >
+                <MoreVertIcon />
+              </IconButton>
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={() => setAnchorEl(null)}
+              >
+                <MenuItem onClick={handleDeletePost}>Delete Post</MenuItem>
+                <MenuItem onClick={handleUpdatePost}>Edit Post</MenuItem>
+              </Menu>
+            </div>
+          )
         }
         title={item.user.firstName + " " + item.user.lastName}
         subheader={
@@ -84,14 +112,14 @@ const PostCard = ({ item }) => {
         }
       />
 
-      {item.image !== null ? (
-        <img
-        className="w-full max-h-[30rem] object-cover object-top"
-        src={item.image}
-        alt=""
-      />
-      ) : (
+      {item.image === null || item.image === "" ? (
         <video controls className="w-full h-full" src={item.video}></video>
+      ) : (
+        <img
+          className="w-full max-h-[30rem] object-cover object-top"
+          src={item.image}
+          alt=""
+        />
       )}
 
       <CardContent>

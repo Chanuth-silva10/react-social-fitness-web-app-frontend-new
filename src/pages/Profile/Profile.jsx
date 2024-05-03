@@ -48,10 +48,19 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(getALlPostAction());
-    dispatch(getALlMealPlanPostAction());
-    dispatch(getALlStatusPostAction());
-    dispatch(getALlGoalPostAction());
   }, [post.newComment]);
+
+  useEffect(() => {
+    dispatch(getALlMealPlanPostAction());
+  }, [meal.newComment]);
+
+  useEffect(() => {
+    dispatch(getALlGoalPostAction());
+  }, [goal.newComment]);
+  
+  useEffect(() => {
+    dispatch(getALlStatusPostAction());
+  }, [status.newComment]);
 
   return (
     <Card className="my-10 w-[70%]">
