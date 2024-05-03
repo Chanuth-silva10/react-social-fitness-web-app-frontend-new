@@ -65,7 +65,7 @@ const Middelpart = () => {
   useEffect(() => {
     dispatch(getALlStatusPostAction());
   }, [status.newComment]);
-
+  
   return (
     <div className="px-20">
       <section className="flex items-center p-5 py-5 rounded-b-md">

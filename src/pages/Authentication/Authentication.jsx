@@ -17,12 +17,11 @@ const Authentication = () => {
         </Grid>
         <Grid item xs={5} className="flex items-center">
           <div className="flex flex-col px-20 justify-self-center">
-            <Card className="p-8 card">
+            <Card className="p-6 card">
               <div className="flex flex-col items-center mb-5 space-y-1">
                 <h1 className="text-center log">Social Fitness</h1>
                 <p className="text-center text-sm w-[70%]">
-                  Welcome and Share your health and fitness information across
-                  platform
+                  Welcome and Share your health and fitness information
                 </p>
               </div>
               <Routes>

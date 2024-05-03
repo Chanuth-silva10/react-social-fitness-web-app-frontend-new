@@ -6,8 +6,6 @@ import {
   CircularProgress,
   IconButton,
   Modal,
-  Typography,
-  Card,
   Tab,
   Tabs,
   TextField,
@@ -19,13 +17,10 @@ import VideoIcon from "@mui/icons-material/VideoCall";
 import { uploadToCloudinary } from "../../utils/uploadToCloudniry";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  createCommentAction,
   createPostAction,
 } from "../../Redux/Post/post.action";
 import { red } from "@mui/material/colors";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
-import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
-import FlagCircleIcon from "@mui/icons-material/FlagCircle";
 import { createStatusPostAction } from "../../Redux/Status/status.action";
 import { createMealPlanPostAction } from "../../Redux/MealPlan/mealPlan.action";
 import { createGoalPostAction } from "../../Redux/Goal/goal.action";
@@ -167,6 +162,9 @@ const CreatePostModal = ({ handleClose, open }) => {
             <p className="text-sm">@{auth.user.firstName}</p>
           </div>
         </div>
+
+
+        
 
         <section>
           <Box sx={{ width: "100%" }}>
