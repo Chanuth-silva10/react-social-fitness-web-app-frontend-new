@@ -35,11 +35,18 @@ const Sidebar = () => {
     if (item.title === "Home") {
       navigate(`/`);
     }
+    if (item.title === "Log out") {
+      localStorage.removeItem("jwt");
+      navigate("/login");
+    }
   };
 
   const handleLogout = () => {
     localStorage.removeItem("jwt");
     navigate("/login");
+  };
+  const goToProgile = () => {
+    navigate(`/profile/${auth.user?.id}`);
   };
 
   const open = Boolean(anchorEl);
@@ -122,8 +129,7 @@ const Sidebar = () => {
               horizontal: "right",
             }}
           >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My Account</MenuItem>
+            <MenuItem onClick={goToProgile}>My Account</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Popover>
         </div>

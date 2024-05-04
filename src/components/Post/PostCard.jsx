@@ -28,8 +28,8 @@ import {
 } from "../../Redux/Post/post.action";
 import { comment } from "postcss";
 import { isLikedByReqUser } from "../../utils/isLikedByReqUser";
-import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
-import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 
 const PostCard = ({ item }) => {
   const [showComments, setShowComments] = useState(false);
@@ -114,6 +114,11 @@ const PostCard = ({ item }) => {
         }
       />
 
+      <CardContent>
+        <Typography variant="body2" color="text.secondary">
+          {item.caption}
+        </Typography>
+      </CardContent>
       {item.image === null || item.image === "" ? (
         <video controls className="w-full h-full" src={item.video}></video>
       ) : (
@@ -124,16 +129,11 @@ const PostCard = ({ item }) => {
         />
       )}
 
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          {item.caption}
-        </Typography>
-      </CardContent>
       <CardActions className="flex justify-between" disableSpacing>
         <div>
           <IconButton onClick={handleLikePost}>
             {isLikedByReqUser(auth.user.id, item) ? (
-              <ThumbUpAltIcon style={{ color: '#20cbc8' }}/>
+              <ThumbUpAltIcon style={{ color: "#20cbc8" }} />
             ) : (
               <ThumbUpOffAltIcon />
             )}
@@ -168,23 +168,30 @@ const PostCard = ({ item }) => {
           <Divider />
 
           <div className="mx-3 my-5 space-y-2 text-xs">
-            {item.comments?.map((comment) => (
-              <div className="flex items-center space-x-5">
-                {comment.user?.proImage === "" ? (
-                  <Avatar
-                    sx={{ height: "2rem", width: "2rem", fontSize: ".7rem" }}
-                  >
-                    {comment.user.firstName[0]}
-                  </Avatar>
-                ) : (
-                  <Avatar
-                    sx={{ width: "2rem", height: "2rem" }}
-                    src={comment.user?.proImage}
-                  ></Avatar>
-                )}
-
-                <p>{comment.content}</p>
-              </div>
+            {item.comments?.map((comment, index) => (
+              <Card key={index}>
+                <CardContent >
+                  <div className="flex items-center space-x-5">
+                    {comment.user?.proImage === "" ? (
+                      <Avatar
+                        sx={{
+                          height: "3rem",
+                          width: "3rem",
+                          fontSize: ".7rem",
+                        }}
+                      >
+                        {comment.user.firstName[0]}
+                      </Avatar>
+                    ) : (
+                      <Avatar
+                        sx={{ width: "3rem", height: "3rem" }}
+                        src={comment.user?.proImage}
+                      ></Avatar>
+                    )}
+                    <Typography>{comment.content}</Typography>
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </section>
