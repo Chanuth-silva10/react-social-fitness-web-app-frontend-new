@@ -1,6 +1,6 @@
-import { Avatar, Box, Button, Card, Tab, Tabs } from "@mui/material";
+import { Avatar, Box, Button, Card, Grid, Tab, Tabs } from "@mui/material";
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import PostCard from "../../components/Post/PostCard";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileModal from "./ProfileModal";
@@ -11,6 +11,7 @@ import StatusPostCard from "../../components/Status/StatusPostCard";
 import GoalPostCard from "../../components/Goal/GoalPostCard";
 import { getALlStatusPostAction } from "../../Redux/Status/status.action";
 import { getALlGoalPostAction } from "../../Redux/Goal/goal.action";
+import Sidebar from "../../components/Sidebar/Sidebar";
 
 const tabs = [
   { value: "post", name: "post" },
@@ -27,6 +28,7 @@ const Profile = () => {
   const { auth, post, meal, goal, status } = useSelector((store) => store);
   const [value, setValue] = React.useState("post");
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -63,7 +65,20 @@ const Profile = () => {
   }, [status.newComment]);
 
   return (
-    <Card className="my-10 w-[70%]">
+    <div className="px-20">
+    <Grid container spacing={0}>
+      <Grid item xs={0} lg={3}>
+        <div className="sticky top-0">
+          <Sidebar />
+        </div>
+      </Grid>
+      <Grid
+        lg={location.pathname === "/" ? 6 : 9}
+        item
+        className="flex justify-center px-5"
+        xs={12}
+      >
+       <Card className="my-10 w-[70%]">
       <div className="rounded-md">
         <div className="h-[15rem]">
           <img
@@ -170,6 +185,11 @@ const Profile = () => {
         <ProfileModal open={open} handleClose={handleClose} />
       </section>
     </Card>
+      </Grid>
+
+     
+    </Grid>
+  </div>
   );
 };
 

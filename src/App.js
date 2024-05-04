@@ -9,6 +9,7 @@ import { ThemeProvider } from "@emotion/react";
 import { darTheme } from "./theme/DarkTheme";
 import Login from "./pages/Authentication/Login";
 import Register from "./pages/Authentication/Register";
+import Profile from "./pages/Profile/Profile";
 
 function App() {
   const { auth } = useSelector((store) => store);
@@ -43,6 +44,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/profile/:id" element={<Profile />} />
         </Routes>
       </div>
     </ThemeProvider>

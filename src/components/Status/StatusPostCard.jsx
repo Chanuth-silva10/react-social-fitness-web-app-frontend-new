@@ -23,7 +23,11 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { useDispatch, useSelector } from "react-redux";
 import { comment } from "postcss";
 import { isLikedByReqUser } from "../../utils/isLikedByReqUser";
-import { createStatusCommentAction, deleteStatusPostAction, likeStatusPostAction } from "../../Redux/Status/status.action";
+import {
+  createStatusCommentAction,
+  deleteStatusPostAction,
+  likeStatusPostAction,
+} from "../../Redux/Status/status.action";
 
 const StatusPostCard = ({ item }) => {
   const [showComments, setShowComments] = useState(false);
@@ -50,7 +54,6 @@ const StatusPostCard = ({ item }) => {
     dispatch(likeStatusPostAction(item.id));
   };
 
-
   const handleDeleteGoalPost = () => {
     dispatch(deleteStatusPostAction(item.id));
     setAnchorEl(null);
@@ -68,7 +71,7 @@ const StatusPostCard = ({ item }) => {
                 height: "3rem",
                 width: "3rem",
                 fontSize: "1rem",
-                bgcolor: red[500]
+                bgcolor: red[500],
               }}
             >
               {item.user.firstName[0]}
@@ -110,19 +113,71 @@ const StatusPostCard = ({ item }) => {
       />
 
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          {item.caption}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography
+          variant="body3"
+          color="text.secondary"
+          className="font-bold"
+        >
           {item.distanceRun}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {item.pushupsCompleted}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {item.weightLifted}
-        </Typography>
+        <div className="grid grid-cols-3 gap-4 mt-4">
+          <Card sx={{ backgroundColor: "rgb(183, 42, 42)" }}>
+            <CardContent>
+              <Typography
+                variant="body3"
+                color="text.secondary"
+                className="font-bold"
+              >
+                Distance Run
+              </Typography>
+              <Typography
+                variant="body3"
+                color="text.secondary"
+                className="font-bold"
+              >
+                {item.distanceRun}
+              </Typography>
+            </CardContent>
+          </Card>
+          <Card sx={{ backgroundColor: "rgb(183, 42, 42)" }}>
+            <CardContent>
+              <Typography
+                variant="body3"
+                color="text.secondary"
+                className="font-bold"
+              >
+                Pushups Completed
+              </Typography>
+              <Typography
+                variant="body3"
+                color="text.secondary"
+                className="font-bold"
+              >
+                {item.pushupsCompleted}
+              </Typography>
+            </CardContent>
+          </Card>
+          <Card sx={{ backgroundColor: "rgb(183, 42, 42)" }}>
+            <CardContent>
+              <Typography
+                variant="body3"
+                color="text.secondary"
+                className="font-bold"
+              >
+                Weight Lifted
+              </Typography>
+              <Typography
+                variant="body3"
+                color="text.secondary"
+                className="font-bold"
+              >
+                {item.weightLifted}
+              </Typography>
+            </CardContent>
+          </Card>
+        </div>
       </CardContent>
+
       <CardActions className="flex justify-between" disableSpacing>
         <div>
           <IconButton onClick={handleLikePost}>

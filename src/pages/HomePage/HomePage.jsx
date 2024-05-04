@@ -29,7 +29,6 @@ const HomePage = () => {
         >
           <Routes>
             <Route path="/" element={<Middelpart />}></Route>
-            <Route path="/profile/:id" element={<Profile />}></Route>
           </Routes>
         </Grid>
 

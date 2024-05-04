@@ -17,7 +17,7 @@ const PopularUserCard = () => {
             Follow
           </Button>
         }
-        title="Chanuth and Jim"
+        title="Chanuth"
         subheader="@Chanuth"
       />
     </div>

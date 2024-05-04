@@ -47,7 +47,6 @@ const Middelpart = () => {
 
   const handleOpenCreatePostModel = () => {
     setOpenCreatePostModal(true);
-    console.log("Open the post model");
   };
 
   useEffect(() => {

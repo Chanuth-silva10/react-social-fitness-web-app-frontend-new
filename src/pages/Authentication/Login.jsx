@@ -1,10 +1,10 @@
 import { Button, Card, Grid, TextField } from "@mui/material";
 import { ErrorMessage, Field, Form, Formik, validateYupSchema } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { loginUserAction } from "../../Redux/Auth/auth.action";
+import { getProfileAction, loginUserAction } from "../../Redux/Auth/auth.action";
 import bg from "../../assets/b4.png";
 
 const initialValues = { email: "", password: "" };
@@ -16,12 +16,30 @@ const validationSchema = {
 };
 const Login = () => {
   const [formValue, setFormValue] = useState();
+  const [jwtChecked, setJwtChecked] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = (values) => {
     dispatch(loginUserAction({ data: values }));
+    if (jwtChecked) {
+      navigate("/");
+    }
   };
+
+  useEffect(() => {
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      dispatch(getProfileAction(jwt))
+        .then(() => setJwtChecked(true))
+        .catch(() => setJwtChecked(true));
+    } else {
+      setJwtChecked(true);
+    }
+  }, [dispatch]);
+
+  
+
   return (
     <div>
       <Grid container>
