@@ -25,7 +25,6 @@ export const createGoalPostAction = (postData) => async (dispatch) => {
   try {
     const { data } = await api.post("/api/goal", postData);
     dispatch({ type: CREATE_GOAL_POST_SUCCESS, payload: data });
-    console.log("Created post ", data);
   } catch (error) {
     dispatch({ type: CREATE_GOAL_POST_FAILURE, payload: error });
   }

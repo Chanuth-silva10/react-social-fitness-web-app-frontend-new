@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import {
   Button,
+  Card,
   FormControlLabel,
+  Grid,
   IconButton,
   Radio,
   RadioGroup,
@@ -14,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { registerUserAction } from "../../Redux/Auth/auth.action";
 import { uploadToCloudinary } from "../../utils/uploadToCloudniry";
+import bg from "../../assets/b6.png";
 
 const initialValues = {
   firstName: "",
@@ -43,7 +46,6 @@ const Register = () => {
     setIsLoading(true);
     try {
       const imageUrl = await uploadToCloudinary(selectedImage, "image");
-      console.log(imageUrl);
       values.proImage = imageUrl;
       dispatch(registerUserAction({ data: values }));
       setIsLoading(false);
@@ -58,13 +60,30 @@ const Register = () => {
   };
 
   return (
-    <>
-      <Formik
+    <div>
+    <Grid container>
+      <Grid
+        className="flex items-center h-screen overflow-hidden"
+        item
+        xs={7}
+      >
+        <img className="h-full ml-40 " src={bg} alt="Background" />
+      </Grid>
+      <Grid item xs={5} className="flex items-center">
+        <div className="flex flex-col px-20 justify-self-center">
+          <Card className="p-8 card">
+            <div className="flex flex-col items-center mb-5 space-y-1">
+              <h1 className="text-center log">Social Fitness</h1>
+              <p className="text-center text-sm w-[70%]">
+                Welcome and Share your health and fitness information
+              </p>
+            </div>
+            <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        <Form className="space-y-3">
+        <Form className="space-y-5">
           <Field
             as={TextField}
             name="firstName"
@@ -168,7 +187,11 @@ const Register = () => {
         if you have already account ?
         <Button onClick={() => navigate("/login")}>Login</Button>
       </div>
-    </>
+          </Card>
+        </div>
+      </Grid>
+    </Grid>
+  </div>
   );
 };
 

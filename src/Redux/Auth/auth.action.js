@@ -30,7 +30,6 @@ export const loginUserAction = (loginData) => async (dispath) => {
       localStorage.setItem("jwt", data.token);
     }
 
-    console.log("Register", data);
     dispath({ type: LOGIN_SUCCESS, payload: data.jwt });
   } catch (error) {
     dispath({ type: LOGIN_FAILURE, payload: error });

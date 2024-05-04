@@ -37,6 +37,11 @@ const Sidebar = () => {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("jwt");
+    navigate("/login");
+  };
+
   const open = Boolean(anchorEl);
 
   const popoverId = open ? "popover-basic" : undefined;
@@ -119,7 +124,7 @@ const Sidebar = () => {
           >
             <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My Account</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Popover>
         </div>
       </div>

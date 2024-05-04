@@ -77,8 +77,6 @@ const CreatePostModal = ({ handleClose, open }) => {
   const handleSelectVideo = async (event) => {
     setIsLoading(true);
     const videoUrl = await uploadToCloudinary(event.target.files[0], "video");
-    console.log(videoUrl);
-    console.log(event);
     setSelectedVideo(videoUrl);
     setIsLoading(false);
     formik.setFieldValue("video", videoUrl);
@@ -322,7 +320,7 @@ const CreatePostModal = ({ handleClose, open }) => {
                   rows="4"
                 ></textarea>
 
-                <div className="space-y-2 mt-2">
+                <div className="mt-2 space-y-2">
                   <TextField
                     fullWidth
                     id=""
@@ -380,7 +378,7 @@ const CreatePostModal = ({ handleClose, open }) => {
                   rows="4"
                 ></textarea>
 
-                <div className="space-y-2 mt-2">
+                <div className="mt-2 space-y-2">
                   <TextField
                     fullWidth
                     id=""

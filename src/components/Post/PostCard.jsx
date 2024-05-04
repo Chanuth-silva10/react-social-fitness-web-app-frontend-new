@@ -28,6 +28,8 @@ import {
 } from "../../Redux/Post/post.action";
 import { comment } from "postcss";
 import { isLikedByReqUser } from "../../utils/isLikedByReqUser";
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 
 const PostCard = ({ item }) => {
   const [showComments, setShowComments] = useState(false);
@@ -131,9 +133,9 @@ const PostCard = ({ item }) => {
         <div>
           <IconButton onClick={handleLikePost}>
             {isLikedByReqUser(auth.user.id, item) ? (
-              <FavoriteIcon />
+              <ThumbUpAltIcon style={{ color: '#20cbc8' }}/>
             ) : (
-              <FavoriteBorderIcon />
+              <ThumbUpOffAltIcon />
             )}
           </IconButton>
           <IconButton>{<ShareIcon />}</IconButton>

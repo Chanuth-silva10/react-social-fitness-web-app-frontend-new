@@ -36,7 +36,6 @@ export default function ProfileModal({ open, handleClose }) {
       proImage:auth.user?.proImage || ""
     },
     onSubmit: (values) => {
-      console.log("values", values);
       dispatch(updateProfileAction(values));
     },
   });

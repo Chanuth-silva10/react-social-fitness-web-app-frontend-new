@@ -13,13 +13,8 @@ export const uploadToCloudinary = async (pics, fileType) => {
       { method: "post", body: data }
     );
 
-    console.log("res----------  ", res);
-
     const fileData = await res.json();
-    console.log("res----------  ", fileData.url);
     return fileData.url;
   } else {
-    console.log("error........");
   }
 };
-// https://res.cloudinary.com/djnpm1f5w/image/upload
