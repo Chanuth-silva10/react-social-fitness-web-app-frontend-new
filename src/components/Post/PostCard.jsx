@@ -30,12 +30,18 @@ import { comment } from "postcss";
 import { isLikedByReqUser } from "../../utils/isLikedByReqUser";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ProfileModal from "../../pages/Profile/ProfileModal";
+import EditPostModal from "./EditPostModal";
 
 const PostCard = ({ item }) => {
   const [showComments, setShowComments] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
   const { auth } = useSelector((store) => store);
+  const [open, setOpen] = React.useState(false);
+  const handleUpdatePostModal = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const loggedInUserId = auth.user.id;
   const checkPostDeletionPermission = item.user.id === loggedInUserId;
@@ -60,8 +66,6 @@ const PostCard = ({ item }) => {
     dispatch(deletePostAction(item.id));
     setAnchorEl(null);
   };
-
-  const handleUpdatePost = () => {};
 
   return (
     <Card className="">
@@ -100,7 +104,7 @@ const PostCard = ({ item }) => {
                 onClose={() => setAnchorEl(null)}
               >
                 <MenuItem onClick={handleDeletePost}>Delete Post</MenuItem>
-                <MenuItem onClick={handleUpdatePost}>Edit Post</MenuItem>
+                <MenuItem onClick={handleUpdatePostModal}>Edit Post</MenuItem>
               </Menu>
             </div>
           )
@@ -162,15 +166,15 @@ const PostCard = ({ item }) => {
               }}
               className="w-full outline-none bg-transparent border border-[#3b4054] rounded-full px-5 py-2"
               type="text"
-              placeholder="Adding comment"
+              placeholder="Write your comment here"
             />
           </div>
           <Divider />
 
           <div className="mx-3 my-5 space-y-2 text-xs">
             {item.comments?.map((comment, index) => (
-              <Card key={index}>
-                <CardContent >
+              <Card sx={{ backgroundColor: "#222534" }} key={index}>
+                <CardContent>
                   <div className="flex items-center space-x-5">
                     {comment.user?.proImage === "" ? (
                       <Avatar
@@ -191,11 +195,43 @@ const PostCard = ({ item }) => {
                     <Typography>{comment.content}</Typography>
                   </div>
                 </CardContent>
+                <CardActions className="flex justify-between" disableSpacing>
+                  <div>
+                    <IconButton>
+                      <ThumbUpOffAltIcon
+                        sx={{ width: "1rem", height: "1rem" }}
+                      />
+                    </IconButton>
+                    <IconButton>
+                      {
+                        <ChatBubbleIcon
+                          sx={{ width: "1rem", height: "1rem" }}
+                        />
+                      }
+                    </IconButton>
+                  </div>
+                  <div>
+                    <IconButton>
+                      {true ? (
+                        <DeleteIcon sx={{ width: "1rem", height: "1rem" }} />
+                      ) : (
+                        <DeleteIcon sx={{ width: "1rem", height: "1rem" }} />
+                      )}
+                    </IconButton>
+                  </div>
+                </CardActions>
               </Card>
             ))}
           </div>
         </section>
       )}
+      <section>
+        <EditPostModal
+          open={open}
+          handleClose={() => setOpen(false)}
+          post={item}
+        />
+      </section>
     </Card>
   );
 };

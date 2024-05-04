@@ -18,6 +18,9 @@ import {
   LIKE_POST_FAILURE,
   LIKE_POST_REQUEST,
   LIKE_POST_SUCCESS,
+  UPDATE_POST_FAILURE,
+  UPDATE_POST_REQUEST,
+  UPDATE_POST_SUCCESS,
 } from "./post.actionType";
 
 export const createPostAction = (postData) => async (dispatch) => {
@@ -73,7 +76,7 @@ export const createCommentAction = (reqData) => async (dispatch) => {
       reqData.data
     );
     dispatch({ type: CREATE_COMMENT_SUCCESS, payload: data });
-    console.log("Created post ", data);
+    //console.log("Created post ", data);
   } catch (error) {
     dispatch({ type: CREATE_COMMENT_FAILURE, payload: error });
   }
@@ -84,7 +87,7 @@ export const deletePostAction = (postId) => async (dispatch) => {
     dispatch({ type: DELETE_POST_REQUEST });
 
     const { data } = await api.delete(`/api/posts/${postId}`);
-    console.log(data);
+    //console.log(data);
     dispatch({
       type: DELETE_POST_SUCCESS,
       payload: data,
@@ -94,6 +97,19 @@ export const deletePostAction = (postId) => async (dispatch) => {
       type: DELETE_POST_FAILURE,
       payload: error,
     });
+  }
+};
+
+export const updatePostAction = (postId, reqData) => async (dispath) => {
+  dispath({ type: UPDATE_POST_REQUEST });
+  console.log("Updated Post Id",postId);
+  console.log("Updated Rea data",reqData);
+  try {
+    const { data } = await api.put(`/api/posts/${postId}`, reqData);
+    console.log("Updated Post",data);
+    dispath({ type: UPDATE_POST_SUCCESS, payload: data });
+  } catch (error) {
+    dispath({ type: UPDATE_POST_FAILURE, payload: error });
   }
 };
 

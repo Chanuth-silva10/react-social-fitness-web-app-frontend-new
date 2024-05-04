@@ -72,7 +72,8 @@ const Middelpart = () => {
           <Avatar sx={{ width: "5rem", height: "5rem" }} src="">
             <FollowTheSignsIcon sx={{ fontSize: "3rem" }} />
           </Avatar>
-          <p>Friends</p>
+          <p>View</p>
+          <p>Profile</p>
         </div>
         {story.map((item) => (
           <StoryCircle />

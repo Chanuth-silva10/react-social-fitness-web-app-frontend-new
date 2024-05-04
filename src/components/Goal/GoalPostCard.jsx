@@ -23,6 +23,8 @@ import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { useDispatch, useSelector } from "react-redux";
 import { comment } from "postcss";
 import { isLikedByReqUser } from "../../utils/isLikedByReqUser";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import DeleteIcon from "@mui/icons-material/Delete";
 import {
   createGoalCommentAction,
   deleteGoalPostAction,
@@ -172,21 +174,61 @@ const GoalPostCard = ({ item }) => {
               }}
               className="w-full outline-none bg-transparent border border-[#3b4054] rounded-full px-5 py-2"
               type="text"
-              placeholder="Adding comment"
+              placeholder="Write your comment here"
             />
           </div>
           <Divider />
 
           <div className="mx-3 my-5 space-y-2 text-xs">
-            {item.comments?.map((comment) => (
-              <div className="flex items-center space-x-5">
-                <Avatar
-                  sx={{ height: "2rem", width: "2rem", fontSize: ".7rem" }}
-                >
-                  {comment.user.firstName[0]}
-                </Avatar>
-                <p>{comment.content}</p>
-              </div>
+            {item.comments?.map((comment, index) => (
+              <Card sx={{ backgroundColor: "#222534" }} key={index}>
+                <CardContent>
+                  <div className="flex items-center space-x-5">
+                    {comment.user?.proImage === "" ? (
+                      <Avatar
+                        sx={{
+                          height: "3rem",
+                          width: "3rem",
+                          fontSize: ".7rem",
+                        }}
+                      >
+                        {comment.user.firstName[0]}
+                      </Avatar>
+                    ) : (
+                      <Avatar
+                        sx={{ width: "3rem", height: "3rem" }}
+                        src={comment.user?.proImage}
+                      ></Avatar>
+                    )}
+                    <Typography>{comment.content}</Typography>
+                  </div>
+                </CardContent>
+                <CardActions className="flex justify-between" disableSpacing>
+                  <div>
+                    <IconButton>
+                      <ThumbUpOffAltIcon
+                        sx={{ width: "1rem", height: "1rem" }}
+                      />
+                    </IconButton>
+                    <IconButton>
+                      {
+                        <ChatBubbleIcon
+                          sx={{ width: "1rem", height: "1rem" }}
+                        />
+                      }
+                    </IconButton>
+                  </div>
+                  <div>
+                    <IconButton>
+                      {true ? (
+                        <DeleteIcon sx={{ width: "1rem", height: "1rem" }} />
+                      ) : (
+                        <DeleteIcon sx={{ width: "1rem", height: "1rem" }} />
+                      )}
+                    </IconButton>
+                  </div>
+                </CardActions>
+              </Card>
             ))}
           </div>
         </section>

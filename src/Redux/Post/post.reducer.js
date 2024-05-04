@@ -12,6 +12,9 @@ import {
   LIKE_POST_FAILURE,
   LIKE_POST_REQUEST,
   LIKE_POST_SUCCESS,
+  UPDATE_POST_FAILURE,
+  UPDATE_POST_REQUEST,
+  UPDATE_POST_SUCCESS,
 } from "./post.actionType";
 
 const initialState = {
@@ -24,19 +27,30 @@ const initialState = {
   newComment: null,
   message: null,
 };
-
+// return { ...state, user: action.payload, error: null, loading: false };
 export const postReducer = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_POST_REQUEST:
     case GET_ALL_POST_REQUEST:
     case LIKE_POST_REQUEST:
     case DELETE_POST_REQUEST:
+    case UPDATE_POST_REQUEST:
       return { ...state, loading: true, error: null };
     case CREATE_POST_SUCCESS:
       return {
         ...state,
         post: action.payload,
         posts: [action.payload, ...state.posts],
+        loading: false,
+        error: null,
+      };
+    case UPDATE_POST_SUCCESS:
+      return {
+        ...state,
+        post: action.payload,
+        posts: state.posts.map(item =>
+          item.id === action.payload.id ? action.payload : item
+        ),
         loading: false,
         error: null,
       };
@@ -77,6 +91,7 @@ export const postReducer = (state = initialState, action) => {
     case GET_ALL_POST_FAILURE:
     case LIKE_POST_FAILURE:
     case DELETE_POST_FAILURE:
+    case UPDATE_POST_FAILURE:
       return { ...state, loading: false, error: action.payload };
     default:
       return state;

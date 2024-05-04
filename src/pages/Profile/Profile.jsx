@@ -34,9 +34,7 @@ const Profile = () => {
     setValue(newValue);
   };
 
-  const userPosts = post.posts.filter(
-    (item) => item.user.id === auth.user.id
-  );
+  const userPosts = post.posts.filter((item) => item.user.id === auth.user.id);
 
   const userMealPosts = meal.posts.filter(
     (item) => item.user.id === auth.user.id
@@ -59,137 +57,135 @@ const Profile = () => {
   useEffect(() => {
     dispatch(getALlGoalPostAction());
   }, [goal.newComment]);
-  
+
   useEffect(() => {
     dispatch(getALlStatusPostAction());
   }, [status.newComment]);
 
   return (
     <div className="px-20">
-    <Grid container spacing={0}>
-      <Grid item xs={0} lg={3}>
-        <div className="sticky top-0">
-          <Sidebar />
-        </div>
+      <Grid container spacing={0}>
+        <Grid item xs={0} lg={3}>
+          <div className="sticky top-0">
+            <Sidebar />
+          </div>
+        </Grid>
+        <Grid
+          lg={location.pathname === "/" ? 6 : 9}
+          item
+          className="flex justify-center px-5"
+          xs={12}
+        >
+          <Card className="my-10 w-[70%]">
+            <div className="rounded-md">
+              <div className="h-[15rem]">
+                <img
+                  className="w-full h-full rounded-t-md"
+                  src="https://cdn.pixabay.com/photo/2014/01/13/20/01/pebbles-243910_640.jpg"
+                  alt=""
+                />
+              </div>
+              <div className="px-5 flex justify-between items-start mt-5 h-[5rem]">
+                <Avatar
+                  className="transform -translate-y-24"
+                  sx={{ width: "10rem", height: "10rem" }}
+                  src={auth.user?.proImage}
+                />
+                {true ? (
+                  <Button
+                    sx={{ borderRadius: "20px" }}
+                    variant="outlined"
+                    onClick={handleOpenProfileModal}
+                  >
+                    Edit Profile
+                  </Button>
+                ) : (
+                  <Button sx={{ borderRadius: "20px" }} variant="outlined">
+                    Follow
+                  </Button>
+                )}
+              </div>
+              <div className="p-5">
+                <div>
+                  <h1 className="py-1 text-xl font-bold">
+                    {auth.user?.firstName + " " + auth.user?.lastName}
+                  </h1>
+                  <p>
+                    @
+                    {auth.user?.firstName.toLowerCase() +
+                      "_" +
+                      auth.user?.lastName.toLowerCase()}
+                  </p>
+                </div>
+                <div className="flex items-center gap-5 py-3">
+                  <span>41 post</span>
+                  <span>35 followrs</span>
+                </div>
+                <div>
+                  <p>fhhfhfbshcbhsdbchd cdcdhcud cudhcuyhduc uhudhcudddj</p>
+                </div>
+              </div>
+              <section>
+                <Box sx={{ width: "100%" }}>
+                  <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="wrapped label tabs example"
+                  >
+                    {tabs.map((item) => (
+                      <Tab value={item.value} label={item.name} wrapped></Tab>
+                    ))}
+                  </Tabs>
+                </Box>
+              </section>
+              <Box
+                sx={{ width: "100%", borderBottom: 1, borderColor: "divider" }}
+              ></Box>
+              <div className="flex justify-center">
+                {value === "post" ? (
+                  <div className="space-y-5 w-[70%] my-10">
+                    {userPosts.map((item) => (
+                      <div className="border rounded-md border-slate-100">
+                        <PostCard item={item} />
+                      </div>
+                    ))}
+                  </div>
+                ) : value === "meals" ? (
+                  <div className="space-y-5 w-[70%] my-10">
+                    {userMealPosts.map((item) => (
+                      <div className="border rounded-md border-slate-100">
+                        <MealPostCard item={item} />
+                      </div>
+                    ))}
+                  </div>
+                ) : value === "status" ? (
+                  <div className="space-y-5 w-[70%] my-10">
+                    {userStatusPosts.map((item) => (
+                      <div className="border rounded-md border-slate-100">
+                        <StatusPostCard item={item} />
+                      </div>
+                    ))}
+                  </div>
+                ) : value === "goal" ? (
+                  <div className="space-y-5 w-[70%] my-10">
+                    {userGoalPosts.map((item) => (
+                      <div className="border rounded-md border-slate-100">
+                        <GoalPostCard item={item} />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
+            <section>
+              <ProfileModal open={open} handleClose={handleClose} />
+            </section>
+          </Card>
+        </Grid>
       </Grid>
-      <Grid
-        lg={location.pathname === "/" ? 6 : 9}
-        item
-        className="flex justify-center px-5"
-        xs={12}
-      >
-       <Card className="my-10 w-[70%]">
-      <div className="rounded-md">
-        <div className="h-[15rem]">
-          <img
-            className="w-full h-full rounded-t-md"
-            src="https://cdn.pixabay.com/photo/2014/01/13/20/01/pebbles-243910_640.jpg"
-            alt=""
-          />
-        </div>
-        <div className="px-5 flex justify-between items-start mt-5 h-[5rem]">
-          <Avatar
-            className="transform -translate-y-24"
-            sx={{ width: "10rem", height: "10rem" }}
-            src={auth.user?.proImage}
-          />
-          {true ? (
-            <Button
-              sx={{ borderRadius: "20px" }}
-              variant="outlined"
-              onClick={handleOpenProfileModal}
-            >
-              Edit Profile
-            </Button>
-          ) : (
-            <Button sx={{ borderRadius: "20px" }} variant="outlined">
-              Follow
-            </Button>
-          )}
-        </div>
-        <div className="p-5">
-          <div>
-            <h1 className="py-1 text-xl font-bold">
-              {auth.user?.firstName + " " + auth.user?.lastName}
-            </h1>
-            <p>
-              @
-              {auth.user?.firstName.toLowerCase() +
-                "_" +
-                auth.user?.lastName.toLowerCase()}
-            </p>
-          </div>
-          <div className="flex items-center gap-5 py-3">
-            <span>41 post</span>
-            <span>35 followrs</span>
-          </div>
-          <div>
-            <p>fhhfhfbshcbhsdbchd cdcdhcud cudhcuyhduc uhudhcudddj</p>
-          </div>
-        </div>
-        <section>
-          <Box sx={{ width: "100%" }}>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              aria-label="wrapped label tabs example"
-            >
-              {tabs.map((item) => (
-                <Tab value={item.value} label={item.name} wrapped></Tab>
-              ))}
-            </Tabs>
-          </Box>
-        </section>
-        <Box
-          sx={{ width: "100%", borderBottom: 1, borderColor: "divider" }}
-        ></Box>
-        <div className="flex justify-center">
-          {value === "post" ? (
-            <div className="space-y-5 w-[70%] my-10">
-              {userPosts.map((item) => (
-                <div className="border rounded-md border-slate-100">
-                  <PostCard item={item} />
-                </div>
-              ))}
-            </div>
-          ) : value === "meals" ? (
-            <div className="space-y-5 w-[70%] my-10">
-              {userMealPosts.map((item) => (
-                <div className="border rounded-md border-slate-100">
-                  <MealPostCard item={item} />
-                </div>
-              ))}
-            </div>
-          ) : value === "status" ? (
-            <div className="space-y-5 w-[70%] my-10">
-              {userStatusPosts.map((item) => (
-                <div className="border rounded-md border-slate-100">
-                  <StatusPostCard item={item} />
-                </div>
-              ))}
-            </div>
-          ) : value === "goal" ? (
-            <div className="space-y-5 w-[70%] my-10">
-              {userGoalPosts.map((item) => (
-                <div className="border rounded-md border-slate-100">
-                  <GoalPostCard item={item} />
-                </div>
-              ))}
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
-      </div>
-      <section>
-        <ProfileModal open={open} handleClose={handleClose} />
-      </section>
-    </Card>
-      </Grid>
-
-     
-    </Grid>
-  </div>
+    </div>
   );
 };
 
