@@ -99,7 +99,6 @@ export const getALlUsersAction = () => async (dispatch) => {
   try {
     const { data } = await api.get("/api/users");
     dispatch({ type: GET_ALL_USER_SUCCESS, payload: data });
-    console.log("Get All user ", data);
   } catch (error) {
     dispatch({ type: GET_ALL_USER_FAILURE, payload: error });
   }

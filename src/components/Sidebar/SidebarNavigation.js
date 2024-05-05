@@ -33,11 +33,6 @@ export const navigationMenu=[
         path:"/workout-status"
     },
     {
-        title:"Notification",
-        icon:<NotificationsIcon/>,
-        path:"/notification"
-    },
-    {
         title:"Profile",
         icon:<AccountBoxIcon/>,
         path:"/profile"

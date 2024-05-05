@@ -4,7 +4,7 @@ import Authentication from "./pages/Authentication/Authentication";
 import HomePage from "./pages/HomePage/HomePage";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { getProfileAction } from "./Redux/Auth/auth.action";
+import { getALlUsersAction, getProfileAction } from "./Redux/Auth/auth.action";
 import { ThemeProvider } from "@emotion/react";
 import { darTheme } from "./theme/DarkTheme";
 import Login from "./pages/Authentication/Login";
@@ -22,6 +22,8 @@ function App() {
       dispatch(getProfileAction(jwt))
         .then(() => setJwtChecked(true))
         .catch(() => setJwtChecked(true));
+
+      dispatch(getALlUsersAction());
     } else {
       setJwtChecked(true);
     }

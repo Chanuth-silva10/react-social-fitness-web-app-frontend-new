@@ -73,10 +73,11 @@ const Middelpart = () => {
             <FollowTheSignsIcon sx={{ fontSize: "3rem" }} />
           </Avatar>
           <p>View</p>
+          {console.log(auth.users)}
           <p>Profile</p>
         </div>
-        {story.map((item) => (
-          <StoryCircle />
+        {auth.users.map((user) => (
+          <StoryCircle user={user}/>
         ))}
       </section>
       <Card className="p-5 mt-5 mb-10">

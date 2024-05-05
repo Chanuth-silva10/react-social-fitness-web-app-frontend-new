@@ -1,20 +1,26 @@
 import { Grid } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Middelpart from "../../components/Middelpart/Middelpart";
 import { Route, Routes, useLocation } from "react-router-dom";
 import HomeRight from "../../components/HomeRight/HomeRight";
 import Profile from "../Profile/Profile";
 import { useDispatch, useSelector } from "react-redux";
+import { getALlUsersAction } from "../../Redux/Auth/auth.action";
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const {auth}=useSelector(store=>store)
-  const jwt=localStorage.getItem("jwt");
+  const { auth } = useSelector((store) => store);
+  const jwt = localStorage.getItem("jwt");
+
+  useEffect(() => {
+    dispatch(getALlUsersAction);
+  }, [dispatch]);
 
   return (
     <div className="px-20">
+      {console.log(auth.users)}
       <Grid container spacing={0}>
         <Grid item xs={0} lg={3}>
           <div className="sticky top-0">
