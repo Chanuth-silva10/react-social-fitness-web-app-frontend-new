@@ -28,7 +28,6 @@ export const createStatusPostAction = (postData) => async (dispatch) => {
   try {
     const { data } = await api.post("/api/status", postData);
     dispatch({ type: CREATE_STATUS_POST_SUCCESS, payload: data });
-    console.log("Created post ", data);
   } catch (error) {
     dispatch({ type: CREATE_STATUS_POST_FAILURE, payload: error });
   }
@@ -39,7 +38,6 @@ export const getALlStatusPostAction = () => async (dispatch) => {
   try {
     const { data } = await api.get("/api/status");
     dispatch({ type: GET_ALL_STATUS_POST_SUCCESS, payload: data });
-    console.log("Get All post ", data);
   } catch (error) {
     dispatch({ type: GET_ALL_STATUS_POST_FAILURE, payload: error });
   }
@@ -50,7 +48,6 @@ export const getUsersStatusPostAction = (userId) => async (dispatch) => {
   try {
     const { data } = await api.get(`/api/status/user/${userId}`);
     dispatch({ type: GET_USERS_STATUS_POST_SUCCESS, payload: data });
-    console.log("Get Users post ", data);
   } catch (error) {
     dispatch({ type: GET_USERS_STATUS_POST_FAILURE, payload: error });
   }
@@ -61,7 +58,6 @@ export const likeStatusPostAction = (postId) => async (dispatch) => {
   try {
     const { data } = await api.put(`/api/status/like/${postId}`);
     dispatch({ type: LIKE_STATUS_POST_SUCCESS, payload: data });
-    console.log("Like post ", data);
   } catch (error) {
     dispatch({ type: LIKE_STATUS_POST_FAILURE, payload: error });
   }
@@ -75,7 +71,6 @@ export const createStatusCommentAction = (reqData) => async (dispatch) => {
       reqData.data
     );
     dispatch({ type: CREATE_COMMENT_STATUS_POST_SUCCESS, payload: data });
-    console.log("Created post ", data);
   } catch (error) {
     dispatch({ type: CREATE_COMMENT_STATUS_POST_FAILURE, payload: error });
   }
@@ -86,7 +81,7 @@ export const deleteStatusPostAction = (postId) => async (dispatch) => {
     dispatch({ type: DELETE_STATUS_POST_REQUEST });
 
     const { data } = await api.delete(`/api/status/${postId}`);
-    console.log(data);
+
     dispatch({
       type: DELETE_STATUS_POST_SUCCESS,
       payload: data,
@@ -101,11 +96,10 @@ export const deleteStatusPostAction = (postId) => async (dispatch) => {
 
 export const updateStatusPostAction = (postId, reqData) => async (dispath) => {
   dispath({ type: UPDATE_STATUS_POST_REQUEST });
-  console.log("Updated Status Post Id", postId);
-  console.log("Updated Status post data", reqData);
+
   try {
     const { data } = await api.put(`/api/status/${postId}`, reqData);
-    console.log("Updated Status Post", data);
+
     dispath({ type: UPDATE_STATUS_POST_SUCCESS, payload: data });
   } catch (error) {
     dispath({ type: UPDATE_STATUS_POST_FAILURE, payload: error });

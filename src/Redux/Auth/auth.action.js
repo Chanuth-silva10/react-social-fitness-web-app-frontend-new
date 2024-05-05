@@ -1,6 +1,9 @@
 import axios from "axios";
 import { API_BASE_URL, api } from "../../config/api";
 import {
+  GET_ALL_USER_FAILURE,
+  GET_ALL_USER_REQUEST,
+  GET_ALL_USER_SUCCESS,
   GET_PROFILE_FAILURE,
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
@@ -88,5 +91,16 @@ export const searchUser = (query) => async (dispath) => {
     dispath({ type: SEARCH_USER_SUCCESS, payload: data });
   } catch (error) {
     dispath({ type: SEARCH_USER_FAILURE, payload: error });
+  }
+};
+
+export const getALlUsersAction = () => async (dispatch) => {
+  dispatch({ type: GET_ALL_USER_REQUEST });
+  try {
+    const { data } = await api.get("/api/users");
+    dispatch({ type: GET_ALL_USER_SUCCESS, payload: data });
+    console.log("Get All user ", data);
+  } catch (error) {
+    dispatch({ type: GET_ALL_USER_FAILURE, payload: error });
   }
 };

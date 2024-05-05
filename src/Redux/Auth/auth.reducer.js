@@ -1,5 +1,8 @@
 import { searchUser } from "./auth.action";
 import {
+  GET_ALL_USER_FAILURE,
+  GET_ALL_USER_REQUEST,
+  GET_ALL_USER_SUCCESS,
   GET_PROFILE_REQUEST,
   GET_PROFILE_SUCCESS,
   LOGIN_FAILURE,
@@ -17,6 +20,7 @@ const initialState = {
   error: null,
   loading: false,
   user: null,
+  users: [],
   searchUser: [],
 };
 
@@ -25,6 +29,7 @@ export const authReducer = (state = initialState, action) => {
     case LOGIN_REQUEST:
     case REGISTER_REQUEST:
     case GET_PROFILE_REQUEST:
+    case GET_ALL_USER_REQUEST:
       return { ...state, loading: true, error: null };
     case GET_PROFILE_SUCCESS:
     case UPDATE_PROFILE_SUCCESS:
@@ -39,8 +44,16 @@ export const authReducer = (state = initialState, action) => {
         loading: false,
         error: null,
       };
+    case GET_ALL_USER_SUCCESS:
+      return {
+        ...state,
+        users: action.payload,
+        loading: false,
+        error: null,
+      };
     case LOGIN_FAILURE:
     case REGISTER_FAILURE:
+    case GET_ALL_USER_FAILURE:
       return { ...state, loading: false, error: action.payload };
 
     default:

@@ -36,11 +36,11 @@ const tabs = [
 
 const Middelpart = () => {
   const dispatch = useDispatch();
-  const { post, auth, meal, goal, status } = useSelector((store) => store);
+  const { post, auth, meal, goal, status} = useSelector((store) => store);
   const [openCreatePostModal, setOpenCreatePostModal] = useState();
   const handleCloseCreatePostModal = () => setOpenCreatePostModal(false);
   const [value, setValue] = React.useState("post");
-
+  
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };

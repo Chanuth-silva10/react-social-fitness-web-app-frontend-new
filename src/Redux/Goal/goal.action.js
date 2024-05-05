@@ -35,7 +35,6 @@ export const getALlGoalPostAction = () => async (dispatch) => {
   try {
     const { data } = await api.get("/api/goals");
     dispatch({ type: GET_ALL_GOAL_POST_SUCCESS, payload: data });
-    console.log("Get All post ", data);
   } catch (error) {
     dispatch({ type: GET_ALL_GOAL_POST_FAILURE, payload: error });
   }
@@ -46,7 +45,6 @@ export const getUsersGoalPostAction = (userId) => async (dispatch) => {
   try {
     const { data } = await api.get(`/api/goals/user/${userId}`);
     dispatch({ type: GET_USERS_GOAL_POST_SUCCESS, payload: data });
-    console.log("Get Users post ", data);
   } catch (error) {
     dispatch({ type: GET_USERS_GOAL_POST_FAILURE, payload: error });
   }
@@ -57,7 +55,6 @@ export const likeGoalPostAction = (postId) => async (dispatch) => {
   try {
     const { data } = await api.put(`/api/goals/like/${postId}`);
     dispatch({ type: LIKE_GOAL_POST_SUCCESS, payload: data });
-    console.log("Like post ", data);
   } catch (error) {
     dispatch({ type: LIKE_GOAL_POST_FAILURE, payload: error });
   }
@@ -71,7 +68,6 @@ export const createGoalCommentAction = (reqData) => async (dispatch) => {
       reqData.data
     );
     dispatch({ type: CREATE_COMMENT_GOAL_POST_SUCCESS, payload: data });
-    console.log("Created post ", data);
   } catch (error) {
     dispatch({ type: CREATE_COMMENT_GOAL_POST_FAILURE, payload: error });
   }
@@ -82,7 +78,6 @@ export const deleteGoalPostAction = (postId) => async (dispatch) => {
     dispatch({ type: DELETE_GOAL_POST_REQUEST });
 
     const { data } = await api.delete(`/api/goals/${postId}`);
-    console.log(data);
     dispatch({
       type: DELETE_GOAL_POST_SUCCESS,
       payload: data,

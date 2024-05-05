@@ -49,6 +49,7 @@ const Register = () => {
       values.proImage = imageUrl;
       dispatch(registerUserAction({ data: values }));
       setIsLoading(false);
+      navigate("/login");
     } catch (error) {
       console.error("Error uploading image:", error);
       setIsLoading(false);
