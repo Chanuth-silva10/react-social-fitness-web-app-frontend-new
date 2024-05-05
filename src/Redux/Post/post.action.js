@@ -87,7 +87,7 @@ export const deletePostAction = (postId) => async (dispatch) => {
     dispatch({ type: DELETE_POST_REQUEST });
 
     const { data } = await api.delete(`/api/posts/${postId}`);
-    //console.log(data);
+    console.log(data);
     dispatch({
       type: DELETE_POST_SUCCESS,
       payload: data,

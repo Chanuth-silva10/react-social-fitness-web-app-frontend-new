@@ -8,7 +8,7 @@ const StoryCircle = ({user}) => {
     <div>
       <div className="flex flex-col items-center p-5 py-5 rounded-b-md">
         <Avatar
-          sx={{ width: "5rem", height: "5rem" }}
+          sx={{ width: "4rem", height: "4rem" }}
           src={user.proImage
           }
         >

@@ -10,6 +10,10 @@ import {
   Divider,
   Menu,
   MenuItem,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  Button,
 } from "@mui/material";
 import { red } from "@mui/material/colors";
 import React, { useState } from "react";
@@ -40,6 +44,7 @@ const PostCard = ({ item }) => {
   const dispatch = useDispatch();
   const { auth } = useSelector((store) => store);
   const [open, setOpen] = React.useState(false);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const handleUpdatePostModal = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
@@ -63,11 +68,23 @@ const PostCard = ({ item }) => {
   };
 
   const handleDeletePost = () => {
-    dispatch(deletePostAction(item.id));
+    setShowConfirmDialog(true);
     setAnchorEl(null);
   };
 
+  const handleDeleteConfirmed = () => {
+    dispatch(deletePostAction(item.id));
+    setShowConfirmDialog(false);
+    window.location.reload();
+  };
+
+  const handleDeleteCanceled = () => {
+    setShowConfirmDialog(false);
+  };
+
+
   return (
+    <>
     <Card className="">
       <CardHeader
         avatar={
@@ -233,6 +250,26 @@ const PostCard = ({ item }) => {
         />
       </section>
     </Card>
+    {/* Confirmation dialog */}
+    <Dialog
+    open={showConfirmDialog}
+    onClose={handleDeleteCanceled}
+    aria-labelledby="alert-dialog-title"
+    aria-describedby="alert-dialog-description"
+  >
+    <DialogTitle id="alert-dialog-title">
+      {"Are you sure you want to delete this post?"}
+    </DialogTitle>
+    <DialogActions>
+      <Button onClick={handleDeleteCanceled} color="primary">
+        Cancel
+      </Button>
+      <Button onClick={handleDeleteConfirmed} color="primary" autoFocus>
+        Delete
+      </Button>
+    </DialogActions>
+  </Dialog>
+  </>
   );
 };
 
