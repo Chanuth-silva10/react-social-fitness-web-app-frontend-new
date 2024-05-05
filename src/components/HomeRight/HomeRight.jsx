@@ -2,9 +2,11 @@ import React from "react";
 import SearchUser from "../SearchUser/SearchUser";
 import PopularUserCard from "./PopularUserCard";
 import { Card } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const popularUser = [1, 1, 1, 1, 1];
 const HomeRight = () => {
+  const { auth } = useSelector((store) => store);
   return (
     <div className="pr-5">
       <SearchUser />
@@ -14,8 +16,8 @@ const HomeRight = () => {
           <p className="text-xs font-semibold opacity-95">View All</p>
         </div>
         <div className="">
-          {popularUser.map((item) => (
-            <PopularUserCard />
+          {auth.users.map((user) => (
+            <PopularUserCard user={user} />
           ))}
         </div>
       </Card>

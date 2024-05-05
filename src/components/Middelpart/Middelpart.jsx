@@ -36,11 +36,11 @@ const tabs = [
 
 const Middelpart = () => {
   const dispatch = useDispatch();
-  const { post, auth, meal, goal, status} = useSelector((store) => store);
+  const { post, auth, meal, goal, status } = useSelector((store) => store);
   const [openCreatePostModal, setOpenCreatePostModal] = useState();
   const handleCloseCreatePostModal = () => setOpenCreatePostModal(false);
   const [value, setValue] = React.useState("post");
-  
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -64,22 +64,22 @@ const Middelpart = () => {
   useEffect(() => {
     dispatch(getALlStatusPostAction());
   }, [status.newComment]);
-  
+
   return (
-    <div className="px-20">
-      <section className="flex items-center p-5 py-5 rounded-b-md">
+    <div>
+      <section className="flex items-center p-20 py-5 rounded-b-md">
         <div className="flex flex-col items-center p-5 py-5 rounded-b-md">
-          <Avatar sx={{ width: "5rem", height: "5rem" }} src="">
+          <Avatar sx={{ width: "3rem", height: "3rem" }} src="">
             <FollowTheSignsIcon sx={{ fontSize: "3rem" }} />
           </Avatar>
           <p>View</p>
-          {console.log(auth.users)}
-          <p>Profile</p>
+          <p>Friends</p>
         </div>
         {auth.users.map((user) => (
-          <StoryCircle user={user}/>
+          <StoryCircle user={user} />
         ))}
       </section>
+      <div className="px-20">
       <Card className="p-5 mt-5 mb-10">
         <div className="flex justify-between">
           {auth.user?.proImage === "" ? (
@@ -174,6 +174,7 @@ const Middelpart = () => {
           open={openCreatePostModal}
         />
       </div>
+    </div>
     </div>
   );
 };

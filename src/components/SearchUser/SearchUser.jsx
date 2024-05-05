@@ -2,8 +2,8 @@ import React from 'react'
 
 const SearchUser = () => {
   return (
-    <div>
-      Search User
+    <div className='mt-10'> 
+      
     </div>
   )
 }
