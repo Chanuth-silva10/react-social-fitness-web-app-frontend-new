@@ -18,6 +18,8 @@ import {
   LIKE_MEAL_PLAN_POST_FAILURE,
   LIKE_MEAL_PLAN_POST_REQUEST,
   LIKE_MEAL_PLAN_POST_SUCCESS,
+  UPDATE_MEAL_POST_FAILURE,
+  UPDATE_MEAL_POST_SUCCESS,
 } from "./mealPlan.actionType";
 
 export const createMealPlanPostAction = (postData) => async (dispatch) => {
@@ -93,5 +95,18 @@ export const deleteMealPostAction = (postId) => async (dispatch) => {
       type: DELETE_MEAL_POST_FAILURE,
       payload: error,
     });
+  }
+};
+
+export const updateMealPostAction = (postId, reqData) => async (dispath) => {
+  dispath({ type: UPDATE_MEAL_POST_FAILURE });
+  console.log("Updated Meal Post Id", postId);
+  console.log("Updated Rea Meal post data", reqData);
+  try {
+    const { data } = await api.put(`/api/meals/${postId}`, reqData);
+    console.log("Updated Meal plan Post", data);
+    dispath({ type: UPDATE_MEAL_POST_SUCCESS, payload: data });
+  } catch (error) {
+    dispath({ type: UPDATE_MEAL_POST_FAILURE, payload: error });
   }
 };

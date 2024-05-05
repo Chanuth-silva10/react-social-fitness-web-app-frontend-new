@@ -128,19 +128,96 @@ const GoalPostCard = ({ item }) => {
         ></video>
       )}
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          {item.caption}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {item.distanceRun}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {item.pushupsCompleted}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {item.weightLifted}
-        </Typography>
+        <div className="grid grid-cols-3 gap-4 mt-4">
+          <Card sx={{ backgroundColor: "rgb(183, 42, 42)" }}>
+            <CardContent>
+              <Typography
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                variant="body3"
+                color="text.secondary"
+                className="flex items-center font-bold"
+              >
+                {item.route}
+              </Typography>
+              <Typography
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                variant="body3"
+                color="text.secondary"
+                className="font-bold"
+              >
+                Routing Type
+              </Typography>
+            </CardContent>
+          </Card>
+          <Card sx={{ backgroundColor: "rgb(183, 42, 42)" }}>
+            <CardContent>
+              
+              <Typography
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                variant="body3"
+                color="text.secondary"
+                className="flex items-center font-bold"
+              >
+                Target Set Count
+              </Typography>
+              <Typography
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                variant="body3"
+                color="text.secondary"
+                className="flex items-center font-bold"
+              >
+                {item.setCount}
+              </Typography>
+            </CardContent>
+          </Card>
+          <Card sx={{ backgroundColor: "rgb(183, 42, 42)" }}>
+            <CardContent>
+             
+              <Typography
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                variant="body3"
+                color="text.secondary"
+                className="font-bold"
+              >
+                Reps
+              </Typography>
+              <Typography
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                variant="body3"
+                color="text.secondary"
+                className="font-bold"
+              >
+                {item.repsType}
+              </Typography>
+            </CardContent>
+          </Card>
+        </div>
       </CardContent>
+
       <CardActions className="flex justify-between" disableSpacing>
         <div>
           <IconButton onClick={handleLikePost}>

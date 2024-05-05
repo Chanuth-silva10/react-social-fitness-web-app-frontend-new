@@ -3,7 +3,8 @@ import { Box, Button, IconButton, Modal, TextField } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
-import { updatePostAction } from "../../Redux/Post/post.action";
+import {} from "../../Redux/MealPlan/mealPlan.action";
+import { updateStatusPostAction } from "../../Redux/Status/status.action";
 
 const style = {
   position: "absolute",
@@ -20,15 +21,18 @@ const style = {
   borderRadious: 3,
 };
 
-const EditPostModal = ({ open, handleClose, post }) => {
+const EditStatusPostModal = ({ open, handleClose, post }) => {
   const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
-      caption: post.caption || "", 
+      caption: post.caption || "",
+      distanceRun: post.distanceRun || "",
+      pushupsCompleted: post.pushupsCompleted || "",
+      weightLifted: post.weightLifted || "",
     },
     onSubmit: (values) => {
-      dispatch(updatePostAction(post.id, values));
+      dispatch(updateStatusPostAction(post.id, values)); // Dispatch action to update post
       handleClose();
     },
   });
@@ -64,6 +68,35 @@ const EditPostModal = ({ open, handleClose, post }) => {
                 onChange={formik.handleChange}
               />
             </div>
+            <div className="mt-4 space-y-6  ">
+              <TextField
+                fullWidth
+                id="distanceRun"
+                type="number"
+                name="distanceRun"
+                label="Distance Ran (in miles)"
+                value={formik.values.distanceRun}
+                onChange={formik.handleChange}
+              />
+              <TextField
+                fullWidth
+                id="pushupsCompleted"
+                type="number"
+                name="pushupsCompleted"
+                label="Number of Pushups Completed"
+                value={formik.values.pushupsCompleted}
+                onChange={formik.handleChange}
+              />
+              <TextField
+                fullWidth
+                id=""
+                type="number"
+                name="weightLifted"
+                label="Weight Lifted"
+                value={formik.values.weightLifted}
+                onChange={formik.handleChange}
+              />
+            </div>
           </form>
         </Box>
       </Modal>
@@ -71,4 +104,4 @@ const EditPostModal = ({ open, handleClose, post }) => {
   );
 };
 
-export default EditPostModal;
+export default EditStatusPostModal;

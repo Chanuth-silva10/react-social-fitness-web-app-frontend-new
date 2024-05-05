@@ -1,9 +1,17 @@
 import React from "react";
-import { Box, Button, IconButton, Modal, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  IconButton,
+  MenuItem,
+  Modal,
+  TextField,
+} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import { updatePostAction } from "../../Redux/Post/post.action";
+import { updateMealPostAction } from "../../Redux/MealPlan/mealPlan.action";
 
 const style = {
   position: "absolute",
@@ -20,15 +28,17 @@ const style = {
   borderRadious: 3,
 };
 
-const EditPostModal = ({ open, handleClose, post }) => {
+const EditMealPostModal = ({ open, handleClose, post }) => {
   const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
-      caption: post.caption || "", 
+      caption: post.caption || "",
+      recipe: post.recipe || "",
+      dietaryPreferences: post.dietaryPreferences || "",
     },
     onSubmit: (values) => {
-      dispatch(updatePostAction(post.id, values));
+      dispatch(updateMealPostAction(post.id, values));
       handleClose();
     },
   });
@@ -52,7 +62,7 @@ const EditPostModal = ({ open, handleClose, post }) => {
                 <Button type="submit">Save</Button>
               </div>
             </div>
-            <div className="space-y-3 mt-4">
+            <div className="mt-4 space-y-3">
               <TextField
                 fullWidth
                 id="caption"
@@ -63,6 +73,35 @@ const EditPostModal = ({ open, handleClose, post }) => {
                 value={formik.values.caption}
                 onChange={formik.handleChange}
               />
+              <TextField
+                fullWidth
+                id="dietaryPreferences"
+                select
+                name="dietaryPreferences"
+                label="Select your Dietary Preferences "
+                value={formik.values.dietaryPreferences}
+                onChange={formik.handleChange}
+              >
+                <MenuItem value="vegetarian">Vegetarian</MenuItem>
+                <MenuItem value="vegan">Vegan</MenuItem>
+                <MenuItem value="keto">Keto</MenuItem>
+              </TextField>
+              <TextField
+                fullWidth
+                id="recipe"
+                select
+                name="recipe"
+                label="Select Recipe"
+                value={formik.values.recipe}
+                onChange={formik.handleChange}
+              >
+                <MenuItem value="Grilled Veggie Salad">
+                  Grilled Veggie Salad
+                </MenuItem>
+                <MenuItem value="Avocado Chicken Salad">
+                  Avocado Chicken Salad
+                </MenuItem>
+              </TextField>
             </div>
           </form>
         </Box>
@@ -71,4 +110,4 @@ const EditPostModal = ({ open, handleClose, post }) => {
   );
 };
 
-export default EditPostModal;
+export default EditMealPostModal;

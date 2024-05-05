@@ -1,3 +1,4 @@
+import { UPDATE_MEAL_POST_SUCCESS } from "../MealPlan/mealPlan.actionType";
 import {
   CREATE_COMMENT_STATUS_POST_SUCCESS,
   CREATE_STATUS_POST_FAILURE,
@@ -12,6 +13,8 @@ import {
   LIKE_STATUS_POST_FAILURE,
   LIKE_STATUS_POST_REQUEST,
   LIKE_STATUS_POST_SUCCESS,
+  UPDATE_STATUS_POST_FAILURE,
+  UPDATE_STATUS_POST_REQUEST,
 } from "./status.actionType";
 
 const initialState = {
@@ -31,6 +34,7 @@ export const statusReducer = (state = initialState, action) => {
     case GET_ALL_STATUS_POST_REQUEST:
     case LIKE_STATUS_POST_REQUEST:
     case DELETE_STATUS_POST_REQUEST:
+    case UPDATE_STATUS_POST_REQUEST:
       return { ...state, loading: true, error: null };
     case CREATE_STATUS_POST_SUCCESS:
       return {
@@ -46,6 +50,16 @@ export const statusReducer = (state = initialState, action) => {
         loading: false,
         error: null,
         message: action.payload,
+      };
+    case UPDATE_MEAL_POST_SUCCESS:
+      return {
+        ...state,
+        post: action.payload,
+        posts: state.posts.map((item) =>
+          item.id === action.payload.id ? action.payload : item
+        ),
+        loading: false,
+        error: null,
       };
     case GET_ALL_STATUS_POST_SUCCESS:
       return {
@@ -77,6 +91,7 @@ export const statusReducer = (state = initialState, action) => {
     case GET_ALL_STATUS_POST_FAILURE:
     case LIKE_STATUS_POST_FAILURE:
     case DELETE_STATUS_POST_FAILURE:
+    case UPDATE_STATUS_POST_FAILURE:
       return { ...state, loading: false, error: action.payload };
     default:
       return state;

@@ -18,6 +18,9 @@ import {
   LIKE_STATUS_POST_FAILURE,
   LIKE_STATUS_POST_REQUEST,
   LIKE_STATUS_POST_SUCCESS,
+  UPDATE_STATUS_POST_FAILURE,
+  UPDATE_STATUS_POST_REQUEST,
+  UPDATE_STATUS_POST_SUCCESS,
 } from "./status.actionType";
 
 export const createStatusPostAction = (postData) => async (dispatch) => {
@@ -93,5 +96,18 @@ export const deleteStatusPostAction = (postId) => async (dispatch) => {
       type: DELETE_STATUS_POST_FAILURE,
       payload: error,
     });
+  }
+};
+
+export const updateStatusPostAction = (postId, reqData) => async (dispath) => {
+  dispath({ type: UPDATE_STATUS_POST_REQUEST });
+  console.log("Updated Status Post Id", postId);
+  console.log("Updated Status post data", reqData);
+  try {
+    const { data } = await api.put(`/api/status/${postId}`, reqData);
+    console.log("Updated Status Post", data);
+    dispath({ type: UPDATE_STATUS_POST_SUCCESS, payload: data });
+  } catch (error) {
+    dispath({ type: UPDATE_STATUS_POST_FAILURE, payload: error });
   }
 };

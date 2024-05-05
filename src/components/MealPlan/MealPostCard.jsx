@@ -31,12 +31,16 @@ import { isLikedByReqUser } from "../../utils/isLikedByReqUser";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditMealPostModal from "./EditMealPostModal";
 
 const MealPostCard = ({ item }) => {
   const [showComments, setShowComments] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   const dispatch = useDispatch();
   const { post, auth } = useSelector((store) => store);
+  const [open, setOpen] = React.useState(false);
+  const handleUpdatePostModal = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const loggedInUserId = auth.user.id;
   const checkPostDeletionPermission = item.user.id === loggedInUserId;
@@ -61,8 +65,6 @@ const MealPostCard = ({ item }) => {
     dispatch(deleteMealPostAction(item.id));
     setAnchorEl(null);
   };
-
-  const handleUpdatePost = () => {};
 
   return (
     <Card className="">
@@ -101,7 +103,7 @@ const MealPostCard = ({ item }) => {
                 onClose={() => setAnchorEl(null)}
               >
                 <MenuItem onClick={handleDeleteGoalPost}>Delete Post</MenuItem>
-                <MenuItem onClick={handleUpdatePost}>Edit Post</MenuItem>
+                <MenuItem onClick={handleUpdatePostModal}>Edit Post</MenuItem>
               </Menu>
             </div>
           )
@@ -131,6 +133,12 @@ const MealPostCard = ({ item }) => {
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {item.caption}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {item.recipe}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {item.dietaryPreferences}
         </Typography>
       </CardContent>
       <CardActions className="flex justify-between" disableSpacing>
@@ -225,6 +233,13 @@ const MealPostCard = ({ item }) => {
           </div>
         </section>
       )}
+      <section>
+        <EditMealPostModal
+          open={open}
+          handleClose={() => setOpen(false)}
+          post={item}
+        />
+      </section>
     </Card>
   );
 };

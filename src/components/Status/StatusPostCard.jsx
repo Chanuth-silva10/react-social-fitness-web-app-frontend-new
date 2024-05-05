@@ -32,12 +32,16 @@ import {
   deleteStatusPostAction,
   likeStatusPostAction,
 } from "../../Redux/Status/status.action";
+import EditStatusPostModal from "./EditStatusPostModal";
 
 const StatusPostCard = ({ item }) => {
   const [showComments, setShowComments] = useState(false);
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = useState(null);
   const { auth } = useSelector((store) => store);
+  const [open, setOpen] = React.useState(false);
+  const handleUpdatePostModal = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const loggedInUserId = auth.user.id;
   const checkPostDeletionPermission = item.user.id === loggedInUserId;
@@ -62,8 +66,6 @@ const StatusPostCard = ({ item }) => {
     dispatch(deleteStatusPostAction(item.id));
     setAnchorEl(null);
   };
-
-  const handleUpdatePost = () => {};
 
   return (
     <Card className="">
@@ -102,7 +104,7 @@ const StatusPostCard = ({ item }) => {
                 onClose={() => setAnchorEl(null)}
               >
                 <MenuItem onClick={handleDeleteGoalPost}>Delete Post</MenuItem>
-                <MenuItem onClick={handleUpdatePost}>Edit Post</MenuItem>
+                <MenuItem onClick={handleUpdatePostModal}>Edit Post</MenuItem>
               </Menu>
             </div>
           )
@@ -304,6 +306,13 @@ const StatusPostCard = ({ item }) => {
           </div>
         </section>
       )}
+      <section>
+        <EditStatusPostModal
+          open={open}
+          handleClose={() => setOpen(false)}
+          post={item}
+        />
+      </section>
     </Card>
   );
 };

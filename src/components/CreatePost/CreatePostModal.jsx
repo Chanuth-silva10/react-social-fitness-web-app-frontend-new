@@ -5,6 +5,7 @@ import {
   Button,
   CircularProgress,
   IconButton,
+  MenuItem,
   Modal,
   Tab,
   Tabs,
@@ -16,9 +17,7 @@ import ImageIcon from "@mui/icons-material/Image";
 import VideoIcon from "@mui/icons-material/VideoCall";
 import { uploadToCloudinary } from "../../utils/uploadToCloudniry";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  createPostAction,
-} from "../../Redux/Post/post.action";
+import { createPostAction } from "../../Redux/Post/post.action";
 import { red } from "@mui/material/colors";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import { createStatusPostAction } from "../../Redux/Status/status.action";
@@ -109,6 +108,8 @@ const CreatePostModal = ({ handleClose, open }) => {
     initialValues: {
       caption: "",
       image: "",
+      recipe: "",
+      dietaryPreferences: "",
     },
     onSubmit: (values) => {
       dispatch(createMealPlanPostAction(values));
@@ -117,10 +118,9 @@ const CreatePostModal = ({ handleClose, open }) => {
 
   const formikGoals = useFormik({
     initialValues: {
-      caption: "",
-      distanceRun: "",
-      pushupsCompleted: "",
-      weightLifted: "",
+      route: "",
+      setCount: "",
+      repsType: "",
     },
     onSubmit: (values) => {
       dispatch(createGoalPostAction(values));
@@ -160,10 +160,6 @@ const CreatePostModal = ({ handleClose, open }) => {
             <p className="text-sm">@{auth.user.firstName}</p>
           </div>
         </div>
-
-
-        
-
         <section>
           <Box sx={{ width: "100%" }}>
             <Tabs
@@ -269,6 +265,38 @@ const CreatePostModal = ({ handleClose, open }) => {
                   value={formikMeals.values.caption}
                   rows="4"
                 ></textarea>
+                <div className="mt-2 space-y-4">
+                  <TextField
+                    fullWidth
+                    id="dietaryPreferences"
+                    select
+                    name="dietaryPreferences"
+                    label="Select your Dietary Preferences "
+                    value={formikMeals.values.dietaryPreferences}
+                    onChange={formikMeals.handleChange}
+                  >
+                    <MenuItem value="vegetarian">Vegetarian</MenuItem>
+                    <MenuItem value="vegan">Vegan</MenuItem>
+                    <MenuItem value="keto">Keto</MenuItem>
+                  </TextField>
+                  <TextField
+                    fullWidth
+                    id="recipe"
+                    select
+                    name="recipe"
+                    label="Select Recipe"
+                    value={formikMeals.values.recipe}
+                    onChange={formikMeals.handleChange}
+                  >
+                    <MenuItem value="Grilled Veggie Salad">
+                      Grilled Veggie Salad
+                    </MenuItem>
+                    <MenuItem value="Avocado Chicken Salad">
+                      Avocado Chicken Salad
+                    </MenuItem>
+                    {/* Add more options as needed */}
+                  </TextField>
+                </div>
                 <div className="flex items-center mt-5 space-x-5">
                   <div>
                     <input
@@ -367,43 +395,62 @@ const CreatePostModal = ({ handleClose, open }) => {
               className="space-y-4 w-[100%] my-4"
             >
               <div>
-                <textarea
-                  className="outline-none w-full mt-5 p-2 
-              bg-transparent border border-[#3b4054] rounded-sm"
-                  placeholder="Write Status Post Description..."
-                  name="caption"
-                  id=""
-                  onChange={formikGoals.handleChange}
-                  value={formikGoals.values.caption}
-                  rows="4"
-                ></textarea>
-
                 <div className="mt-2 space-y-2">
                   <TextField
                     fullWidth
-                    id=""
-                    type="number"
-                    name="distanceRun"
-                    label="Distance Ran (in miles)"
-                    value={formikGoals.values.distanceRun}
+                    id="route"
+                    select
+                    name="route"
+                    label="Select Routine"
+                    value={formikGoals.values.route}
                     onChange={formikGoals.handleChange}
-                  />
+                  >
+                    <MenuItem value="General Warm-up">
+                      General Warm-up
+                    </MenuItem>
+                    <MenuItem value="Barbell Squats">
+                      Barbell Squats
+                    </MenuItem>
+                    <MenuItem value="Walking Lunges">
+                      Walking Lunges
+                    </MenuItem>
+                    <MenuItem value="Leg Press">
+                      Leg Press
+                    </MenuItem>
+                    <MenuItem value="Step-ups">
+                      Step-ups
+                    </MenuItem>
+                    <MenuItem value="Calf Raises">
+                      Calf Raises
+                    </MenuItem>
+                    <MenuItem value="Post-workout Stretching">
+                      Post-workout Stretching
+                    </MenuItem>
+                    <MenuItem value="Inclined Walking">
+                      Inclined Walking
+                    </MenuItem>
+                  </TextField>
                   <TextField
                     fullWidth
-                    id=""
-                    type="number"
-                    name="pushupsCompleted"
-                    label="Number of Pushups Completed"
-                    value={formikGoals.values.pushupsCompleted}
+                    id="setCount"
+                    select
+                    name="setCount"
+                    label="Set Goal Count"
+                    value={formikGoals.values.setCount}
                     onChange={formikGoals.handleChange}
-                  />
+                  >
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                  </TextField>
                   <TextField
                     fullWidth
-                    id=""
-                    type="number"
-                    name="weightLifted"
-                    label="Weight Lifted"
-                    value={formikGoals.values.weightLifted}
+                    id="repsType"
+                    type="text"
+                    name="repsType"
+                    label="Reps"
+                    value={formikGoals.values.repsType}
                     onChange={formikGoals.handleChange}
                   />
                 </div>
