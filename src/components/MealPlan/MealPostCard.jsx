@@ -33,6 +33,7 @@ import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditMealPostModal from "./EditMealPostModal";
 
+
 const MealPostCard = ({ item }) => {
   const [showComments, setShowComments] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -145,9 +146,9 @@ const MealPostCard = ({ item }) => {
         <div>
           <IconButton onClick={handleLikePost}>
             {isLikedByReqUser(auth.user.id, item) ? (
-              <FavoriteIcon />
+              <ThumbUpAltIcon style={{ color: "#20cbc8" }}/>
             ) : (
-              <FavoriteBorderIcon />
+              <ThumbUpOffAltIcon />
             )}
           </IconButton>
           <IconButton>{<ShareIcon />}</IconButton>
