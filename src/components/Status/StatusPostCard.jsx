@@ -234,9 +234,9 @@ const StatusPostCard = ({ item }) => {
         <div>
           <IconButton onClick={handleLikePost}>
             {isLikedByReqUser(auth.user.id, item) ? (
-              <FavoriteIcon />
+               <ThumbUpAltIcon style={{ color: "#20cbc8" }} />
             ) : (
-              <FavoriteBorderIcon />
+              <ThumbUpOffAltIcon />
             )}
           </IconButton>
           <IconButton>{<ShareIcon />}</IconButton>

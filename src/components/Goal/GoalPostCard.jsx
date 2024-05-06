@@ -18,10 +18,9 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ShareIcon from "@mui/icons-material/Share";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
-import BookmarkBorderIcon, { BookmarkAdd } from "@mui/icons-material";
+import BookmarkBorderIcon from "@mui/icons-material";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import { useDispatch, useSelector } from "react-redux";
-import { comment } from "postcss";
 import { isLikedByReqUser } from "../../utils/isLikedByReqUser";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -30,6 +29,7 @@ import {
   deleteGoalPostAction,
   likeGoalPostAction,
 } from "../../Redux/Goal/goal.action";
+import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 
 const GoalPostCard = ({ item }) => {
   const [showComments, setShowComments] = useState(false);
@@ -222,9 +222,9 @@ const GoalPostCard = ({ item }) => {
         <div>
           <IconButton onClick={handleLikePost}>
             {isLikedByReqUser(auth.user.id, item) ? (
-              <FavoriteIcon />
+              <ThumbUpAltIcon style={{ color: "#20cbc8" }} />
             ) : (
-              <FavoriteBorderIcon />
+              <ThumbUpOffAltIcon />
             )}
           </IconButton>
           <IconButton>{<ShareIcon />}</IconButton>

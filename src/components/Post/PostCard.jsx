@@ -204,7 +204,14 @@ const PostCard = ({ item }) => {
                           src={comment.user?.proImage}
                         ></Avatar>
                       )}
-                      <Typography>{comment.content}</Typography>
+                      <div>
+                        <Typography variant="body1" gutterBottom>
+                          <strong>{comment.user.firstName}</strong>
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {comment.content}
+                        </Typography>
+                      </div>
                     </div>
                   </CardContent>
                   <CardActions className="flex justify-between" disableSpacing>
