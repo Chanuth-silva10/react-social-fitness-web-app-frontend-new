@@ -12,6 +12,7 @@ This project is a social fitness web application built using React. It allows us
 
 ## Folder Structure
 react-social-fitness-web-app-frontend-new/
+```shell
 ├── src/
 │ ├── Redux/     -- add one section example only
 │ │ └── Auth/
@@ -32,7 +33,7 @@ react-social-fitness-web-app-frontend-new/
 │ ├── logo.svg
 │ ├── reportWebVitals.js
 │ └── setupTests.js
-
+```
 
 ## Getting Started
 
