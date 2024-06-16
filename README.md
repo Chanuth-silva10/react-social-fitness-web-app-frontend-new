@@ -66,7 +66,7 @@ Ensure you have the following installed:
 
    ```
 ## Technologies Used
-```shell
+```markdown
 React: JavaScript library for building user interfaces.
 Redux: State management library.
 Tailwind CSS: Utility-first CSS framework for styling.
