@@ -66,8 +66,10 @@ Ensure you have the following installed:
 
    ```
 ## Technologies Used
+```shell
 React: JavaScript library for building user interfaces.
 Redux: State management library.
 Tailwind CSS: Utility-first CSS framework for styling.
 MUI: Used for easily get component
 Create React App: Toolchain for creating React applications.
+```
